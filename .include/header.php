@@ -14,9 +14,9 @@
 <?php
     }
 ?>
-        <meta name="keywords" content="york student homes, york student houses, accommodation, living, renting, homes, houses, properties, aparments, living, students, york" />
+        <meta name="keywords" content="<?php echo cms('meta_keywords'); ?>" />
         <meta name="copyright" content="<?php echo $copyright; ?>" />
-        <title><?php echo empty($title) ? '' : "$title - "; ?>York Student Homes</title>
+        <title><?php echo (empty($title) ? '' : "$title — ") . $company_name; ?></title>
         <script type="text/javascript" src="<?php echo $prefix; ?>/js/ga.js"></script>
 <?php
     if (strpos($_SERVER['SCRIPT_NAME'], 'admin') !== false) {
@@ -31,7 +31,7 @@
     <body>
         <div id="header">
         <h1><a href="<?php echo $prefix; ?>/"><?php echo $company_name; ?></a></h1>
-            <p>A great place to find a great place to live!</p>
+        <p><?php echo cms('tagline'); ?></p>
         </div>
 
         <div id="nav">

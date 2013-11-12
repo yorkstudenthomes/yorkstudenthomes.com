@@ -14,9 +14,9 @@
 ?>
                 <h2>York Student Homes &mdash; <?php echo $academic_year_range; ?> academic year</h2>
 
-                <p>If you are looking for a house to live in, with your friends, while you are studying at York University, York St John or The College of Law  in York then you&rsquo;ve just found a great place to find one!</p>
+                <p>If you are looking for a house to live in, with your friends, while you are studying at York University or York St John in York then you&rsquo;ve just found a great place to find one!</p>
 
-                <p>We&rsquo;re a family business and have been renting houses to university students in York for more than 20 years. We have houses for groups of 3, 4, 5 and 6 in various areas of York to suit your needs!</p>
+                <p>We&rsquo;re a family business and have been renting houses to university students in York for more than 20 years. We have houses for groups of 4, 5 and 6 in various areas of York to suit your needs!</p>
 
                 <p>Take a look at our web site and just give us a call, or email us, if you wish to view any or all of our properties!</p>
 
