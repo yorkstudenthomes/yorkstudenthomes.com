@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<url>
+		<loc>http://yorkstudenthomes.com/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>1</priority>
+	</url>
+
+	<url>
+		<loc>http://yorkstudenthomes.com/homes/</loc>
+		<changefreq>monthly</changefreq>
+		<priority>0.5</priority>
+	</url>
+
+	<url>
+		<loc>http://yorkstudenthomes.com/homes/22-kyme-st/</loc>
+		<changefreq>monthly</changefreq>
+		<priority>0.5</priority>
+	</url>
+
+	<url>
+		<loc>http://yorkstudenthomes.com/homes/23-moss-st/</loc>
+		<changefreq>monthly</changefreq>
+		<priority>0.8</priority>
+	</url>
+
+	<url>
+		<loc>http://yorkstudenthomes.com/homes/25-lamel-st/</loc>
+		<changefreq>monthly</changefreq>
+		<priority>0.8</priority>
+	</url>
+
+	<url>
+		<loc>http://yorkstudenthomes.com/homes/52-moss-st/</loc>
+		<changefreq>monthly</changefreq>
+		<priority>0.8</priority>
+	</url>
+
+	<url>
+		<loc>http://yorkstudenthomes.com/homes/54-trafalgar-st/</loc>
+		<changefreq>monthly</changefreq>
+		<priority>0.8</priority>
+	</url>
+
+	<url>
+		<loc>http://yorkstudenthomes.com/homes/74-eldon-st/</loc>
+		<changefreq>monthly</changefreq>
+		<priority>0.8</priority>
+	</url>
+
+	<url>
+		<loc>http://yorkstudenthomes.com/homes/88-queen-victoria-st/</loc>
+		<changefreq>monthly</changefreq>
+		<priority>0.8</priority>
+	</url>
+
+	<url>
+		<loc>http://yorkstudenthomes.com/contact/</loc>
+		<changefreq>yearly</changefreq>
+		<priority>0.5</priority>
+	</url>
+
+	<url>
+		<loc>http://yorkstudenthomes.com/maps/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.7</priority>
+	</url>
+
+	<url>
+		<loc>http://yorkstudenthomes.com/accommodation-for-students/</loc>
+		<changefreq>monthly</changefreq>
+		<priority>0.3</priority>
+	</url>
+</urlset>

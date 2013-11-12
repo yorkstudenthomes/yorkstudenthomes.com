@@ -1,0 +1,12 @@
+* html #navright {
+	margin-left: 0px;
+}
+
+legend {
+	margin-bottom: 20px;
+}
+
+#save {
+	margin-top: -10px !important;
+	margin-bottom: 15px !important;
+}

@@ -1,0 +1,542 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body, input {
+    width: 100%;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Trebuchet MS, Verdana, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #291e86;
+}
+
+h1 {
+    position: absolute;
+    font-size: 20px;
+    line-height: 20px;
+    margin-top: 20px;
+    padding: 4px;
+    font-variant: small-caps;
+    color: white;
+    background-color: #291e86;
+    font-family: Century Gothic, Verdana, Arial, Helvetica, sans-serif;
+}
+
+h1 a, h1 a:hover {
+    text-decoration: none;
+    color: white;
+    border: none;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 18px;
+    margin-top: -15px;
+    margin-bottom: 10px;
+}
+
+h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+fieldset fieldset legend {
+    font-weight: bold;
+    font-style: italic;
+    padding-top: 10px;
+    margin-bottom: 5px;
+}
+
+hr {
+    display: none;
+}
+
+acronym, acronym a {
+    cursor: help;
+    border-bottom: 1px dashed !important;
+}
+
+#header {
+    height: 4.2em;
+    width: 780px;
+    margin: 0 auto;
+    line-height: 85px;
+}
+
+#header p {
+    text-align: right;
+    padding-right: 20px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-style: italic;
+    font-size: 13px;
+}
+
+#nav {
+    text-align: center;
+    font-size: 11px;
+    color: white;
+    background-color: #291e86;
+    border-bottom: 1px solid #291e86;
+    height: 35px;
+    background: #fff url("../images/button1.gif");
+}
+
+#navright {
+    position: absolute;
+    left: 50%;
+    margin-left: -450px;
+}
+
+#nav ul {
+    padding-left: 32px;
+    list-style: none;
+    height: 35px;
+    background: #fff url("../images/button1.gif");
+    position: relative;
+    border-bottom: 1px solid #291e86;
+}
+
+#nav ul li {
+    float:left;
+}
+
+#nav ul li a {
+    display: block;
+    float: left;
+    height: 35px;
+    line-height: 35px;
+    color: #eee;
+    text-decoration: none;
+    font-size: 11px;
+    font-family: arial, verdana, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    padding-left: 8px;
+    cursor: pointer;
+    border-bottom: none;
+}
+
+#nav ul li a b {
+    float: left;
+    display: block;
+    padding: 0 16px 0 8px;
+}
+
+#selected a {
+    color: #fff;
+    background: url("../images/button3.gif");
+}
+
+#selected a b {
+    background: url("../images/button3.gif") no-repeat right top;
+}
+
+#nav ul li a:hover {
+    color: #fff;
+    background: #000 url("../images/button2.gif");
+}
+
+#nav ul li a:focus {
+    outline: none;
+}
+
+#nav ul li a:hover b {
+    background: url("../images/button2.gif") no-repeat right top;
+}
+
+#selected a:hover {
+    color: #eee !important;
+    background: #000 url("../images/button3.gif") !important;
+    cursor: default;
+}
+
+#selected.link a:hover {
+  cursor: pointer;
+}
+
+#selected a:hover b {
+    background: url("../images/button3.gif") no-repeat right top !important;
+}
+
+#banner {
+    clear: left;
+    width: 100%;
+    height: 145px;
+    background-color: white;
+    margin: 0 0 0 auto;
+}
+
+#bannerright {
+    margin-left: 50%;
+}
+
+#bannerimg {
+    margin-left: -388.5px;
+    height: 145px;
+    background: left url("../images/banner.blue.jpg") no-repeat white;
+}
+
+#main {
+    width: 760px;
+    margin: 10px auto;
+    text-align: justify;
+}
+
+#main a {
+    text-decoration: none;
+    border-bottom: 1px solid #999;
+    color: #291e86;
+}
+
+#main a:hover {
+    border-bottom-style: solid !important;
+    border-bottom-color: #291e86;
+}
+
+#main p {
+    margin-bottom: 18px;
+}
+
+#main, address, ul, dl {
+    font-size: 13px;
+}
+
+#left {
+    float: left;
+    width: 580px;
+}
+
+#right {
+    float: left;
+    text-align: center;
+    width: 180px;
+}
+
+#right a, #right a:hover {
+    border: none !important;
+}
+
+#right a img {
+    margin-bottom: 10px;
+    padding: 6px;
+    border: 1px solid #999;
+    background-color: #e1dff9;
+}
+
+#right a:hover img {
+    padding: 6px;
+    border: 1px solid #291e86;
+}
+
+#img {
+    margin: 10px auto;
+    width: 780px;
+    text-align: center;
+    clear: both;
+}
+
+#img img {
+    border: 1px solid #291e86;
+}
+
+.feature, #desc, address {
+    padding: 10px;
+    border: 1px solid #a59ded;
+    background-color: #e1dff9;
+    color: #291e86;
+    text-align: left;
+}
+
+.feature {
+    width: 300px;
+    float: left;
+    margin-left: 30px;
+}
+
+fieldset {
+    position: relative;
+    display: block;
+    padding: 15px;
+    width: 725px;
+    border: 1px solid #a59ded;
+}
+
+legend {
+    padding: 0 5px;
+}
+
+fieldset input, fieldset textarea, fieldset select {
+    width: 300px;
+    float: left;
+    margin-bottom: 10px;
+    border: 1px solid #a59ded;
+}
+
+fieldset input[type="submit"], fieldset input[type="reset"], fieldset input[type="button"] {
+    width: 302px;
+    background-color: #c3bef3;
+    color: #291e86;
+}
+
+fieldset input[type="submit"]:hover, fieldset input[type="reset"]:hover, fieldset input[type="button"]:hover {
+    background-color: #e1dff9;
+}
+
+fieldset input[disabled] {
+    color: #888;
+    border-color: #888;
+    background-color: #ece9d8;
+    font-style: italic;
+}
+
+fieldset input[disabled]:hover {
+    background-color: #ece9d8;
+}
+
+fieldset label {
+    float: left;
+    margin-bottom: 10px;
+    text-align: right;
+    width: 8em;
+    padding-right: 10px;
+}
+
+fieldset br {
+    clear: left;
+}
+
+fieldset #set_rented, fieldset #set_available {
+    width: 230px;
+    font-weight: bold;
+}
+
+fieldset #set_available {
+    float: none;
+}
+
+fieldset #yes, fieldset #no {
+    width: 40px;
+    float: none;
+}
+
+fieldset #yes {
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+fieldset em {
+    display: block;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+fieldset .bill_price {
+    width: 75px;
+    margin-right: 10px;
+}
+
+fieldset .bill_desc {
+    width: 90px;
+    color: #666;
+}
+
+fieldset #preview {
+    margin-top: 10px;
+}
+
+fieldset #save {
+    margin-top: -20px;
+}
+
+fieldset #reset_form {
+    margin-top: -10px;
+}
+
+fieldset fieldset {
+    padding: 0;
+    margin-bottom: 10px;
+    border: none;
+    clear: left;
+}
+
+fieldset fieldset, textarea, .feature {
+    margin-bottom: 15px;
+}
+
+fieldset input.error, fieldset textarea.error, fieldset select.error, div.error {
+    border: 1px solid red;
+    background-color: #ffd5d5;
+}
+
+div.success {
+    border: 1px solid green;
+    background-color: #a1ffb5;
+}
+
+div.info {
+    border: 1px solid #fb9209;
+    background-color: #fff4b7;
+}
+
+div.error h1, div.error h2, div.error h3, div.error h4, div.error h5,
+div.error h6, .error li:before {
+    margin-top: 0;
+    color: red !important;
+}
+
+div.info h1, div.info h2, div.info h3, div.info h4, div.info h5,
+div.info h6, .info li:before {
+    margin-top: 0;
+    color: #fb9209 !important;
+}
+
+div.success h1, div.success h2, div.success h3, div.success h4, div.success h5,
+div.success h6, .success li:before {
+    margin-top: 0;
+    color: green !important;
+}
+
+div.error, div.success, div.info {
+    padding: 10px;
+    padding-bottom: 0px;
+    margin-bottom: 10px;
+}
+
+a.remove_link {
+    margin-left: 10px;
+}
+
+label.forprice {
+    width: 10px;
+}
+
+.bill_price {
+    width: 75px;
+    margin-right: 10px;
+}
+
+.bill_desc {
+    width: 90px;
+    color: #666;
+}
+
+address {
+    width: 12em;
+    background: top right url("../images/mail.png") no-repeat #e1dff9;
+}
+
+#desc {
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.price {
+    font-size: 16px;
+    color: #291e86;
+    display: block;
+}
+
+#main ul {
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+}
+
+#main ul li {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+dl {
+    margin-top: 20px;
+}
+
+dd {
+    margin: 2px 0 10px 30px;
+
+}
+
+#email {
+    margin-top: 20px;
+}
+
+#footer {
+    clear: left;
+    min-height: 93px;
+    width: 780px;
+    margin: 20px auto 0 auto;
+    color: white;
+    background: top left url("../images/footer.png") no-repeat white;
+}
+
+#footer p {
+    padding-top: 10px;
+    font-size: 10px;
+}
+
+#footer a {
+    color: white;
+    padding-bottom: 1px;
+    text-decoration: none;
+    border-bottom: 1px solid #291e86;
+}
+
+#footer a:hover {
+    border-bottom-color: white;
+}
+
+#copyright, #siteby {
+    padding-left: 23px;
+}
+
+#afs-link, #admin-link {
+    float: right;
+    margin-right: 23px;
+}
+
+td {
+    padding-top: 20px;
+}
+
+#afs {
+    width: 430px;
+    background-color: #ce965a;
+    border: 1px solid black;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 80%;
+}
+
+#afs strong {
+    font-size: 140%;
+}
+
+#afs img {
+    border: none;
+}
+
+#afs a {
+    color: white;
+    border-bottom: none;
+}
+
+#afs a:hover {
+    border-bottom: none !important;
+    text-decoration: underline;
+}
+
+#epc label {
+    width: 10em;
+}
+
+#epc input {
+    width: 4em;
+}
