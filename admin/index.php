@@ -55,6 +55,16 @@
         if (isset($_POST['house_id'])) {
             $house_id = intval($_POST['house_id']);
             $is_rented = $_POST['is_rented'];
+            $house_type = mysql_real_escape_string($_POST['house_type']);
+            $house_desc = mysql_real_escape_string($_POST['house_desc']);
+
+            if (empty($house_type)) {
+                $error['house_type'] = 'The property must have a tag line.';
+            }
+
+            if (empty($house_desc)) {
+                $error['house_desc'] = 'The property must have a description.';
+            }
 
             $bill_values = array();
             $bills = $_POST['bill'];
@@ -79,7 +89,7 @@
             }
 
             if (count($error) == 0) {
-                mysql_query("UPDATE " . TABLE_DESC . " SET `rented` = $is_rented WHERE `house_id` = $house_id");
+                mysql_query("UPDATE " . TABLE_DESC . " SET `type` = '" . $house_type . "', `description` = '" . $house_desc . "', `rented` = $is_rented WHERE `house_id` = $house_id");
                 mysql_query("DELETE FROM " . TABLE_BILL . " WHERE `house_id` = $house_id");
                 mysql_query("INSERT INTO " . TABLE_BILL . " (`bill_id`, `house_id`, `room_price`, `room_description`) VALUES " . implode(', ', $bill_values));
                 mysql_query("DELETE FROM " . TABLE_FEATURE . " WHERE `house_id` = $house_id");
@@ -97,9 +107,11 @@
                 $tables[$row['Name']] = $row;
             }
 
-            $house_results = mysql_query("SELECT `house_address`, `rented` FROM " . TABLE_DESC . " WHERE `house_id` = $house_id");
+            $house_results = mysql_query("SELECT `house_address`, `rented`, `type`, `description` FROM " . TABLE_DESC . " WHERE `house_id` = $house_id");
             echo "\t\t\t<h3>" . mysql_result($house_results, 0, 'house_address') . "</h3>\n";
             $is_rented = mysql_result($house_results, 0, 'rented');
+            $house_type = mysql_result($house_results, 0, 'type');
+            $house_desc = mysql_result($house_results, 0, 'description');
 
             if (isset($_GET['house_id'])) {
                 $bills = $features = array();
@@ -130,6 +142,11 @@
                 <fieldset>
                     <legend>Property Details</legend>
 <?php
+            if (count($error) > 0) {
+                $err_list = get_errors($error);
+                echo $err_list;
+            }
+
             echo "\t\t\t\t\t<div id=\"rented\"" . ($is_rented ? ' class="info"' : '') . ">\n\t\t\t\t\t\t";
             if ($is_rented) {
                 echo '<h4>Property is rented</h4><p>This property is marked as rented.</p> <input id="set_available" type="submit" value="Make available again" />';
@@ -137,14 +154,20 @@
                 echo '<input id="set_rented" type="button" value="Mark this property as rented" />';
             }
             echo "\n\t\t\t\t\t</div>\n";
-
-            if (count($error) > 0) {
-                $err_list = get_errors($error);
-                echo $err_list;
-            }
 ?>
                     <input type="hidden" name="house_id" value="<?php echo $house_id; ?>" />
                     <input type="hidden" id="is_rented" name="is_rented" value="<?php echo ($is_rented ? 1 : 0); ?>" />
+
+                    <fieldset id="description">
+                        <legend>Description</legend>
+                        <em>Enter the tagline and main description or the property.</em>
+
+                        <textarea id="house_type" name="house_type" rows="6" cols="35"<?php if (isset($error['house_type'])) { echo ' class="error"'; } ?>><?php echo $house_type; ?></textarea>
+                        <span class="feature" id="preview_house_type"><?php echo markup($house_type); ?></span><br />
+
+                        <textarea id="house_desc" name="house_desc" rows="6" cols="35"<?php if (isset($error['house_desc'])) { echo ' class="error"'; } ?>><?php echo $house_desc; ?></textarea>
+                        <span class="feature" id="preview_house_desc"><?php echo markup($house_desc); ?></span>
+                    </fieldset>
 
                     <fieldset id="epc" class="hidden">
                         <legend>EPC Details</legend>
