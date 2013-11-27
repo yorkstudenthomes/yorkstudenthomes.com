@@ -15,11 +15,12 @@
 				</address>
 
 				<dl>
-					<dt>Phone</dt>
-					<dd>01904&nbsp;778432</dd>
+					<dt>Phone (Bec Nutton)</dt>
+					<dd><a href="tel:07739%20307808">07739&nbsp;307&nbsp;808</a></dd>
 
-					<dt>Mobile</dt>
-					<dd>07946&nbsp;702322</dd>
+					<dt>Phone (Michael Nutton)</dt>
+					<dd><a href="tel:01904%20778432">01904&nbsp;778&nbsp;432</a></dd>
+					<dd><a href="tel:07946%20702322">07946&nbsp;702&nbsp;322</a></dd>
 
 					<dt>Email</dt>
 					<dd><a href="mailto:michael@yorkstudenthomes.com">michael@yorkstudenthomes.com</a></dd>
