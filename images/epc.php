@@ -34,19 +34,21 @@
     }
 
     $values = array('ee', 0, 0);
+    $size = array(480, 448);
     if (isset($_SERVER['PATH_INFO'])) {
-        $path_values = array_slice(explode('/', substr($_SERVER['PATH_INFO'], 1)), 0, 3);
+        $path_values = explode('/', substr($_SERVER['PATH_INFO'], 1));
         if (count($path_values) >= 3) {
             if (in_array(strtolower($path_values[0]), array_keys($colours))) { $values[0] = strtolower($path_values[0]); }
             if (is_numeric($path_values[1]) && $path_values[1] >= 0 && $path_values[1] <= 100) { $values[1] = $path_values[1]; }
             if (is_numeric($path_values[2]) && $path_values[2] >= 0 && $path_values[2] <= 100) { $values[2] = $path_values[2]; }
+            if (isset($path_values[3]) && $path_values[3] == 'thumb') { $size = array(150, 140); }
         }
     }
     list($type, $c, $p) = $values;
     list($c_colour, $c_shift) = shift($type, $c);
     list($p_colour, $p_shift) = shift($type, $p);
 
-    $graph = new CanvasGraph(480, 448, 'auto');
+    $graph = new CanvasGraph($size[0], $size[1], 'auto');
     $graph->SetBackgroundImage("$type.png", BGIMG_FILLFRAME);
     $graph->InitFrame();
 
