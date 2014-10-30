@@ -84,7 +84,7 @@
             $feature_values = array();
             $features = $_POST['feature'];
             foreach ($features as $feature_id => $feature_text) {
-                $feature_values[] = '(' . intval($feature_id) . ", $house_id, '" . $db->real_escape_string($feature_text) . "')";
+                $feature_values[] = '(' . intval($feature_id) . ", $house_id, '" . $db->real_escape_string(trim($feature_text)) . "')";
             }
 
             if (count($error) == 0) {
@@ -188,7 +188,7 @@
 
                     <fieldset id="bills">
                         <legend>Bills</legend>
-                        <em>Leave the text blank to simply show that price. Enter a text description to describe more than one bill for a particular house, e.g. &ldquo;Room with ensuite&rdquo;. For a range of prices, enter the prices separated by a hyphen, e.g. &ldquo;55-65&rdquo;.</em>
+                        <em>Leave the text blank to simply show that price. Enter a text description to describe more than one bill for a particular house, e.g. &ldquo;Room with en-suite&rdquo;. For a range of prices, enter the prices separated by a hyphen, e.g. &ldquo;55-65&rdquo;.</em>
 
                         <input type="hidden" name="next_bill" id="next_bill" value="<?php echo $tables['bill']['Auto_increment']; ?>" />
 <?php
