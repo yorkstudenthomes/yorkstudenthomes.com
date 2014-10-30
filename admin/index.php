@@ -12,7 +12,7 @@
     } else {
         $error = array();
         if (isset($_POST['password'])) {
-            if (in_array(md5(stripslashes($_POST['password'])),  array(ADMIN_PASSWORD))) {
+            if (in_array(md5(stripslashes($_POST['password'])), explode(':', getenv('YSH_ADMIN_PASSWORDS')))) {
                 $_SESSION['auth'] = true;
             } else {
                 $error['password'] = 'The password was incorrect.';
