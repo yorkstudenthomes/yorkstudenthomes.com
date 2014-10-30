@@ -50,21 +50,21 @@
 
 	if (!$house['is_rented']) { echo "\t\t\t\t<p id=\"email\">Email for details about this house: <a href=\"mailto:$email_address\">$email_address</a></p>\n\n"; }
 
-	if (is_file($_SERVER['DOCUMENT_ROOT'] . $prefix_folder . '/homes/' . $house_path . '/plans.pdf')) {
-		echo "<p><a rel=\"external\" href=\"$prefix/homes/$house_path/plans.pdf\">View house plans</a> (PDF)</p>\n";
+	if (is_file($_SERVER['DOCUMENT_ROOT'] . '/homes/' . $house_path . '/plans.pdf')) {
+		echo "<p><a rel=\"external\" href=\"/homes/$house_path/plans.pdf\">View house plans</a> (PDF)</p>\n";
 	}
 
 	echo "\t\t\t</div>\n\t\t\t<div id=\"right\">\n";
 
-	foreach (image_list($_SERVER['DOCUMENT_ROOT'] . $prefix_folder . '/images/' . $house_path . '/') as $image) {
+	foreach (image_list($_SERVER['DOCUMENT_ROOT'] . '/images/' . $house_path . '/') as $image) {
 		if (strpos($image, 'thumb') === false && strpos($image, 'pdf') === false) {
-			echo "\t\t\t\t<a href=\"$prefix/image.php/$house_path/$image\"><img src=\"$prefix/images/$house_path/"  . substr($image, 0, -4) . '_thumb' . substr($image, -4) . "\" alt=\"Image of " . house_name($house_path) . "\" /></a>\n";
+			echo "\t\t\t\t<a href=\"/image.php/$house_path/$image\"><img src=\"/images/$house_path/"  . substr($image, 0, -4) . '_thumb' . substr($image, -4) . "\" alt=\"Image of " . house_name($house_path) . "\" /></a>\n";
 		}
 	}
 
 	foreach (array('e', 'i') as $type) {
 		if ($epc["e{$type}r_current"] > 0 && $epc["e{$type}r_potential"] > 0) {
-			echo "\t\t\t\t<a href=\"$prefix/image.php/epc.php/e{$type}/" , $epc["e{$type}r_current"] , '/' , $epc["e{$type}r_potential"] , "\"><img src=\"$prefix/images/thumb.php/epc.php/e{$type}/" , $epc["e{$type}r_current"] , '/' , $epc["e{$type}r_potential"] , "\" alt=\"E" . strtoupper($type) . "R Graph of " . house_name($house_path) . "\" /></a>\n";
+			echo "\t\t\t\t<a href=\"/image.php/epc.php/e{$type}/" , $epc["e{$type}r_current"] , '/' , $epc["e{$type}r_potential"] , "\"><img src=\"/images/thumb.php/epc.php/e{$type}/" , $epc["e{$type}r_current"] , '/' , $epc["e{$type}r_potential"] , "\" alt=\"E" . strtoupper($type) . "R Graph of " . house_name($house_path) . "\" /></a>\n";
 		}
 	}
 

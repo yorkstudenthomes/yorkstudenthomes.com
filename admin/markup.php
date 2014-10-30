@@ -19,7 +19,7 @@
 		<h2>Homes Administration</h2>
 		<h3>Feature markup explanation</h3>
 
-		<p><a href="<?php echo $prefix; ?>/admin/">Back to administration panel</a></p>
+		<p><a href="/admin/">Back to administration panel</a></p>
 
 		<p>You can include some simple formatting of the features for a house. The following table gives some examples of how to use these formatting tags.</p>
 

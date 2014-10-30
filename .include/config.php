@@ -2,13 +2,6 @@
     if (empty($debug)) { $debug = false; }
     error_reporting($debug ? E_ALL : 0);
 
-    $prefix_folder = '';
-    $prefix = "http://yorkstudenthomes.com{$prefix_folder}";
-
-    /*header("Vary: Accept");
-    $content_type = (stristr($_SERVER['HTTP_ACCEPT'], 'application/xhtml+xml') ? 'application/xhtml+xml' : 'text/html');
-    header("Content-Type: $content_type; charset=utf-8");*/
-
     if (strpos($_SERVER['SCRIPT_FILENAME'], 'homes') !== false) {
         $house_path = basename(dirname($_SERVER['SCRIPT_FILENAME']));
         $email_address = $house_path . '@yorkstudenthomes.com';

@@ -17,20 +17,20 @@
         <meta name="keywords" content="<?php echo cms('meta_keywords'); ?>" />
         <meta name="copyright" content="<?php echo $copyright; ?>" />
         <title><?php echo (empty($title) ? '' : "$title — ") . $company_name; ?></title>
-        <script type="text/javascript" src="<?php echo $prefix; ?>/js/ga.js"></script>
+        <script type="text/javascript" src="/js/ga.js"></script>
 <?php
     if (strpos($_SERVER['SCRIPT_NAME'], 'admin') !== false) {
-        echo "\t\t<script type=\"text/javascript\" src=\"$prefix/js/admin.js\"></script>\n";
+        echo "\t\t<script type=\"text/javascript\" src=\"/js/admin.js\"></script>\n";
     }
 ?>
-        <link rel="stylesheet" title="Default Stylesheet" type="text/css" href="<?php echo $prefix; ?>/css/default.css" />
+        <link rel="stylesheet" title="Default Stylesheet" type="text/css" href="/css/default.css" />
         <!--[if IE]>
-        <link rel="stylesheet" type="text/css" href="<?php echo $prefix; ?>/css/ie.css" />
+        <link rel="stylesheet" type="text/css" href="/css/ie.css" />
         <![endif]-->
     </head>
     <body>
         <div id="header">
-        <h1><a href="<?php echo $prefix; ?>/"><?php echo $company_name; ?></a></h1>
+        <h1><a href="/"><?php echo $company_name; ?></a></h1>
         <p><?php echo cms('tagline'); ?></p>
         </div>
 
@@ -59,9 +59,9 @@
             $class = ' class="link"';
         }
 
-        $match = (strpos($location, $_SERVER['DOCUMENT_ROOT'] . $prefix_folder . $url) === 0);
+        $match = (strpos($location, $_SERVER['DOCUMENT_ROOT'] . $url) === 0);
 
-        echo "\t\t\t\t\t<li" , ($match ? ' id="selected"' . $class : '') , '><a href="' , $prefix , $url , '"><b>' , $link_title , "</b></a></li>\n";
+        echo "\t\t\t\t\t<li" , ($match ? ' id="selected"' . $class : '') , '><a href="' , $url , '"><b>' , $link_title , "</b></a></li>\n";
     }
 ?>
                 </ul>

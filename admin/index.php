@@ -132,13 +132,13 @@
                 }
             }
 
-            echo "\t\t\t<p><a href=\"$prefix/admin/\">Back to homes administration</a></p>\n";
+            echo "\t\t\t<p><a href=\"/admin/\">Back to homes administration</a></p>\n";
 
             if (count($error) == 0 && isset($_POST['house_id'])) {
                 echo "\t\t\t<div class=\"success\">\n\t\t\t\t<h4>Details Saved</h4>\n\t\t\t\t<p>The details have been updated.</p>\n\t\t\t</div>\n";
             }
 ?>
-            <form id="details" method="post" action="<?php echo $prefix; ?>/admin/" enctype="multipart/form-data">
+            <form id="details" method="post" action="/admin/" enctype="multipart/form-data">
                 <fieldset>
                     <legend>Property Details</legend>
 <?php
@@ -204,7 +204,7 @@
 
                     <fieldset>
                         <legend>Features</legend>
-                        <em>Write the feature then click &ldquo;Preview features&rdquo; to see the result on the right-hand side. Also have a look at the <a href="<?php echo $prefix; ?>/admin/markup.php">available markup</a>.</em>
+                        <em>Write the feature then click &ldquo;Preview features&rdquo; to see the result on the right-hand side. Also have a look at the <a href="/admin/markup.php">available markup</a>.</em>
 
                         <input type="hidden" name="next_feature" id="next_feature" value="<?php echo $tables['feature']['Auto_increment']; ?>" />
 <?php
@@ -216,7 +216,7 @@
             echo "<p><a id=\"feature_link\" href=\"#\">add</a></p><input disabled=\"disabled\" id=\"preview\" type=\"button\" value=\"Preview features\" /></fieldset><input id=\"save\" type=\"submit\" value=\"Save all data\" /><br /><input id=\"reset_form\" type=\"reset\" value=\"Reset data\" /></fieldset>\n</form>\n";
         } else {
 ?>
-            <form method="post" action="<?php echo $prefix; ?>/admin/" enctype="multipart/form-data">
+            <form method="post" action="/admin/" enctype="multipart/form-data">
                 <fieldset>
                     <legend>Site settings</legend>
 
@@ -239,13 +239,13 @@
 
             $results = mysql_query("SELECT `house_id`, `house_address` FROM " . TABLE_DESC);
             while ($row = mysql_fetch_array($results, MYSQL_ASSOC)) {
-                echo "<li><a href=\"$prefix/admin/?house_id=" . $row['house_id'] . '">' . $row['house_address'] . "</a></li>\n";
+                echo "<li><a href=\"/admin/?house_id=" . $row['house_id'] . '">' . $row['house_address'] . "</a></li>\n";
             }
             echo "</ul>\n<p><a href=\"http://start.yorkstudenthomes.com/\">Go to Start Page</a><br /><a href=\"http://mail.yorkstudenthomes.com/\">Go to Mailbox</a><br /><a href=\"http://calendar.yorkstudenthomes.com/\">Go to Calendar</a></p>\n";
         }
     } else {
 ?>
-                <form method="post" action="<?php echo $prefix; ?>/admin/" enctype="multipart/form-data">
+                <form method="post" action="/admin/" enctype="multipart/form-data">
                     <fieldset id="login">
                         <legend>Please enter your password</legend>
 
