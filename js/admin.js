@@ -147,7 +147,7 @@ function previewFeatures() {
         parameters += encodeURI('&preview_' + featureName + '=' + feature.value);
     }
 
-    AJAXRequest('http://yorkstudenthomes.com/admin/markup.php', parameters, displayPreviews);
+    AJAXRequest('/admin/markup.php', parameters, displayPreviews);
 }
 
 function flipPreviewSaveButtons(mustPreview) {
