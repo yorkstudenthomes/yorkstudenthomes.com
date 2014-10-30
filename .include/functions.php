@@ -1,10 +1,11 @@
 <?php
     function image_list($dir) {
-        global $privileged_user;
         $il = array();
-        if ($hi = opendir($dir)) {
+        if (is_dir($dir)) {
+            $hi = opendir($dir);
+
             while ($sz = readdir($hi)) {
-                if ($sz{0} != '.' && is_file($dir . $sz)) {
+                if ($sz[0] != '.' && is_file($dir . $sz)) {
                     $il[] = $sz;
                 }
             }
