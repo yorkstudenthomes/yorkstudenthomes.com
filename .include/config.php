@@ -18,11 +18,6 @@
 
     $date_start = 2008;
 
-    define('YSH_HOST', '');
-    define('YSH_USER', '');
-    define('YSH_PASS', '');
-    define('YSH_DB',   '');
-
     define('TABLE_PREFIX',  '');
     define('TABLE_BILL',    '`' . TABLE_PREFIX . 'bill`');
     define('TABLE_DESC',    '`' . TABLE_PREFIX . 'description`');

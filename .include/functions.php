@@ -148,8 +148,10 @@
     }
 
     function db_connect() {
-        if (!mysql_connect(YSH_HOST, YSH_USER, YSH_PASS)) { echo '<!-- ' . mysql_error() . ' -->'; return false; }
-        elseif (!mysql_select_db(YSH_DB)) { echo '<!--' . mysql_error() . '-->'; return false; }
+        $url = parse_url(getenv('CLEARDB_DATABASE_URL'));
+
+        if (!mysql_connect($url['host'], $url['user'], $url['pass'])) { echo '<!-- ' . mysql_error() . ' -->'; return false; }
+        elseif (!mysql_select_db(substr($url['path'], 1))) { echo '<!--' . mysql_error() . '-->'; return false; }
         return true;
     }
 
