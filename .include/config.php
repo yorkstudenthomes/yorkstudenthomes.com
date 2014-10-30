@@ -1,6 +1,5 @@
 <?php
-    if (empty($debug)) { $debug = false; }
-    error_reporting($debug ? E_ALL : 0);
+    error_reporting(E_ALL);
 
     if (strpos($_SERVER['SCRIPT_FILENAME'], 'homes') !== false) {
         $house_path = basename(dirname($_SERVER['SCRIPT_FILENAME']));
