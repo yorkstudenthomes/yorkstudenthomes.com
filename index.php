@@ -24,7 +24,7 @@
 
                 <h2>Accommodation for Students</h2>
 
-                <p>We are now listed on <a href="<?php echo $prefix; ?>/afs/">Accommodation for Students</a>, the number 1 student accommodation search engine.</p>
+                <p>We are now listed on <a href="<?php echo $prefix; ?>/accommodation-for-students/">Accommodation for Students</a>, the number 1 student accommodation search engine.</p>
 <?php
     require('.include/footer.php');
 ?>
