@@ -104,7 +104,6 @@
             '/\[abbr=(.*?)(?::\w+)?\](.*?)\[\/abbr(?::\w+)?\]/si'    => "<acronym title=\"$1\">$2</acronym>",
             '/\[url(?::\w+)?\]www\.(.*?)\[\/url(?::\w+)?\]/si'        => "<a class=\"plainlinks\" href=\"http://www.$1\">$1</a>",
             '/\[url(?::\w+)?\](.*?)\[\/url(?::\w+)?\]/si'            => "<a href=\"$1\">$1</a>",
-            '/\[url=(.*?)(?::\w+)?\](.*?)\[\/url(?::\w+)?\]/sie'    => "'<a href=\"'.absolute_url('$1').'\">$2</a>'",
             '/([0-9]+)\h*-{1,2}\h*([0-9]+)/'                        => '$1&ndash;$2',
             '/ - /si'                                                => '&nbsp;&mdash; ',
             '/(\d+\s*\)?\s*)x(\s*\(?\s*\d+)/'                        => '$1&times;$2'
@@ -112,6 +111,9 @@
         );
 
         $message = preg_replace(array_keys($preg), array_values($preg), nl2br(myhtmlentities($message)));
+        $message = preg_replace_callback('/\[url=(.*?)(?::\w+)?\](.*?)\[\/url(?::\w+)?\]/si', function ($matches) {
+            return '<a href="' . absolute_url($matches[1]) . '">' . $matches[2] . '</a>';
+        }, $message);
 
         $ret = ' ' . $message;
         $ret = preg_replace("#([\t\r\n ])([a-z0-9]+?){1}://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \"\n\r\t<]*)?)#i", '\1<a href="\2://\3">\2://\3</a>', $ret);
@@ -132,7 +134,9 @@
                 $curl = replace_quotes($curl);
 
             } elseif (strstr($curl, 'title="') || strstr($curl, 'alt="')) {
-                $curl = preg_replace('/(code|alt|title)=\"([^\"]+)\"/ie', "'$1=\"'.replace_quotes('$2').'\"'", $curl);
+                $curl = preg_replace_callback('/(code|alt|title)=\"([^\"]+)\"/i', function ($matches) {
+                    return $matches[1] . '="' . replace_quotes($matches[2]) . '"';
+                }, $curl);
             }
 
             if($curl != "<br />" || !$codeopen) { $output .= $curl; }
