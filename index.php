@@ -1,13 +1,12 @@
 <?php
     require('.include/header.php');
 
-    if (!db_connect()) {
+    if (!$db = db_connect()) {
         echo "\t\t\t\t<div class=\"error\">\n\t\t\t\t\t<h2>Sorry!</h2>\n\t\t\t\t\t<p>There seems to have been a problem with the site. We&rsquo;re looking into it and it should be fixed soon.</p>\n\t\t\t\t</div>\n\n";
     } else {
-        $results = mysql_query("SELECT COUNT(`rented`) AS `num_available` FROM " . TABLE_DESC . " WHERE `rented` = 0");
-        $num_available = mysql_result($results, 0, 'num_available');
+        $result = $db->query("SELECT COUNT(`rented`) AS `num_available` FROM " . TABLE_DESC . " WHERE `rented` = 0");
 
-        if ($num_available == 0) {
+        if (!$result->num_rows) {
             echo "\t\t\t\t<div class=\"info\">\n\t\t\t\t\t<h2>All houses unavailable</h2>\n\t\t\t\t\t<p>All of our houses have been taken for this year.</p>\n\t\t\t\t</div>\n\n";
         }
     }

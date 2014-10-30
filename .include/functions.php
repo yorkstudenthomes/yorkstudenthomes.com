@@ -148,19 +148,28 @@
     }
 
     function db_connect() {
-        $url = parse_url(getenv('CLEARDB_DATABASE_URL'));
+        static $db;
 
-        if (!mysql_connect($url['host'], $url['user'], $url['pass'])) { echo '<!-- ' . mysql_error() . ' -->'; return false; }
-        elseif (!mysql_select_db(substr($url['path'], 1))) { echo '<!--' . mysql_error() . '-->'; return false; }
-        return true;
+        if ($db === null) {
+            $url = parse_url(getenv('CLEARDB_DATABASE_URL'));
+            $db = new mysqli($url['host'], $url['user'], $url['pass'], substr($url['path'], 1));
+
+            if ($db->connect_error) {
+                echo '<!-- ' . $db->connect_error . ' -->';
+                $db = false;
+            }
+        }
+
+        return $db;
     }
 
     function get_setting($key) {
-        db_connect();
-        $result = mysql_query('SELECT value FROM ' . TABLE_SETTING . ' WHERE `setting` = "' . mysql_real_escape_string($key) . '"');
+        if ($db = db_connect()) {
+            $result = $db->query('SELECT value FROM ' . TABLE_SETTING . ' WHERE `setting` = "' . $db->real_escape_string($key) . '"');
 
-        if ($row = mysql_fetch_assoc($result)) {
-            return $row['value'];
+            if ($row = $result->fetch_assoc()) {
+                return $row['value'];
+            }
         }
 
         return null;

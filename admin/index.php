@@ -35,8 +35,7 @@
 
     if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
-        db_connect();
-
+        $db = db_connect();
         $error = array();
 
         if (isset($_POST['year'])) {
@@ -48,15 +47,15 @@
 
             if (count($error) == 0) {
                 $academic_year = $year;
-                mysql_query('UPDATE ' . TABLE_SETTING . ' SET `value` = "' . mysql_real_escape_string($year) . '" WHERE `setting` = "year"');
+                $db->query('UPDATE ' . TABLE_SETTING . ' SET `value` = "' . $db->real_escape_string($year) . '" WHERE `setting` = "year"');
             }
         }
 
         if (isset($_POST['house_id'])) {
             $house_id = intval($_POST['house_id']);
             $is_rented = $_POST['is_rented'];
-            $house_type = mysql_real_escape_string($_POST['house_type']);
-            $house_desc = mysql_real_escape_string($_POST['house_desc']);
+            $house_type = $db->real_escape_string($_POST['house_type']);
+            $house_desc = $db->real_escape_string($_POST['house_desc']);
 
             if (empty($house_type)) {
                 $error['house_type'] = 'The property must have a tag line.';
@@ -72,7 +71,7 @@
                 if (!preg_match('/\d+(?:-\d+)?/', $bill['price'])) {
                     $error['bill'][$bill_id]['price'] = 'The price is in the wrong format.';
                 } else {
-                    $bill_values[] = '(' . intval($bill_id) . ", $house_id, '" . mysql_real_escape_string($bill['price']) . "', '" . mysql_real_escape_string($bill['desc']) . "')";
+                    $bill_values[] = '(' . intval($bill_id) . ", $house_id, '" . $db->real_escape_string($bill['price']) . "', '" . $db->real_escape_string($bill['desc']) . "')";
                 }
             }
 
@@ -85,16 +84,16 @@
             $feature_values = array();
             $features = $_POST['feature'];
             foreach ($features as $feature_id => $feature_text) {
-                $feature_values[] = '(' . intval($feature_id) . ", $house_id, '" . mysql_real_escape_string($feature_text) . "')";
+                $feature_values[] = '(' . intval($feature_id) . ", $house_id, '" . $db->real_escape_string($feature_text) . "')";
             }
 
             if (count($error) == 0) {
-                mysql_query("UPDATE " . TABLE_DESC . " SET `type` = '" . $house_type . "', `description` = '" . $house_desc . "', `rented` = $is_rented WHERE `house_id` = $house_id");
-                mysql_query("DELETE FROM " . TABLE_BILL . " WHERE `house_id` = $house_id");
-                mysql_query("INSERT INTO " . TABLE_BILL . " (`bill_id`, `house_id`, `room_price`, `room_description`) VALUES " . implode(', ', $bill_values));
-                mysql_query("DELETE FROM " . TABLE_FEATURE . " WHERE `house_id` = $house_id");
-                mysql_query("INSERT INTO " . TABLE_FEATURE . " (`feature_id`, `house_id`, `feature`) VALUES " . implode(', ', $feature_values));
-                mysql_query("UPDATE " . TABLE_EPC . " SET `eer_current` = " . $_POST['epc']['ec'] . ", `eer_potential` = " . $_POST['epc']['ep'] . ", `eir_current` = " . $_POST['epc']['ic'] . ", `eir_potential` = " . $_POST['epc']['ip'] . " WHERE `house_id` = $house_id");
+                $db->query("UPDATE " . TABLE_DESC . " SET `type` = '" . $house_type . "', `description` = '" . $house_desc . "', `rented` = $is_rented WHERE `house_id` = $house_id");
+                $db->query("DELETE FROM " . TABLE_BILL . " WHERE `house_id` = $house_id");
+                $db->query("INSERT INTO " . TABLE_BILL . " (`bill_id`, `house_id`, `room_price`, `room_description`) VALUES " . implode(', ', $bill_values));
+                $db->query("DELETE FROM " . TABLE_FEATURE . " WHERE `house_id` = $house_id");
+                $db->query("INSERT INTO " . TABLE_FEATURE . " (`feature_id`, `house_id`, `feature`) VALUES " . implode(', ', $feature_values));
+                $db->query("UPDATE " . TABLE_EPC . " SET `eer_current` = " . $_POST['epc']['ec'] . ", `eer_potential` = " . $_POST['epc']['ep'] . ", `eir_current` = " . $_POST['epc']['ic'] . ", `eir_potential` = " . $_POST['epc']['ip'] . " WHERE `house_id` = $house_id");
             }
         }
 
@@ -102,32 +101,33 @@
             $house_id = intval($_REQUEST['house_id']);
             $tables = array();
 
-            $results = mysql_query("SHOW TABLE STATUS LIKE '%'");
-            while ($row = mysql_fetch_array($results, MYSQL_ASSOC)) {
+            $results = $db->query("SHOW TABLE STATUS LIKE '%'");
+            while ($row = $results->fetch_assoc()) {
                 $tables[$row['Name']] = $row;
             }
 
-            $house_results = mysql_query("SELECT `house_address`, `rented`, `type`, `description` FROM " . TABLE_DESC . " WHERE `house_id` = $house_id");
-            echo "\t\t\t<h3>" . mysql_result($house_results, 0, 'house_address') . "</h3>\n";
-            $is_rented = mysql_result($house_results, 0, 'rented');
-            $house_type = mysql_result($house_results, 0, 'type');
-            $house_desc = mysql_result($house_results, 0, 'description');
+            $house_results = $db->query("SELECT `house_address`, `rented`, `type`, `description` FROM " . TABLE_DESC . " WHERE `house_id` = $house_id");
+            $house = $house_results->fetch_assoc();
+            echo "\t\t\t<h3>" . $house['house_address'] . "</h3>\n";
+            $is_rented = $house['rented'];
+            $house_type = $house['type'];
+            $house_desc = $house['description'];
 
             if (isset($_GET['house_id'])) {
                 $bills = $features = array();
 
-                $bill_results = mysql_query("SELECT `bill_id`, `room_price`, `room_description` FROM " . TABLE_BILL . " WHERE `house_id` = $house_id");
-                while ($row = mysql_fetch_array($bill_results, MYSQL_ASSOC)) {
+                $bill_results = $db->query("SELECT `bill_id`, `room_price`, `room_description` FROM " . TABLE_BILL . " WHERE `house_id` = $house_id");
+                while ($row = $bill_results->fetch_assoc()) {
                     $bills[$row['bill_id']] = array('price' => $row['room_price'], 'desc' => $row['room_description']);
                 }
 
-                $feature_results = mysql_query("SELECT `feature_id`, `feature` FROM " . TABLE_FEATURE . " WHERE `house_id` = $house_id ORDER BY `feature_id`");
-                while ($row = mysql_fetch_array($feature_results, MYSQL_ASSOC)) {
+                $feature_results = $db->query("SELECT `feature_id`, `feature` FROM " . TABLE_FEATURE . " WHERE `house_id` = $house_id ORDER BY `feature_id`");
+                while ($row = $feature_results->fetch_assoc()) {
                     $features[$row['feature_id']] = $row['feature'];
                 }
 
-                $epc_results = mysql_query("SELECT `eer_current`, `eer_potential`, `eir_current`, `eir_potential` FROM " . TABLE_EPC . " WHERE `house_id` = $house_id");
-                foreach (mysql_fetch_array($epc_results, MYSQL_ASSOC) as $field_name => $field) {
+                $epc_results = $db->query("SELECT `eer_current`, `eer_potential`, `eir_current`, `eir_potential` FROM " . TABLE_EPC . " WHERE `house_id` = $house_id");
+                foreach ($epc_results->fetch_assoc() as $field_name => $field) {
                     $epc[$field_name[1] . $field_name[4]] = $field;
                 }
             }
@@ -237,11 +237,11 @@
 <?php
             echo "<ul>\n";
 
-            $results = mysql_query("SELECT `house_id`, `house_address` FROM " . TABLE_DESC);
-            while ($row = mysql_fetch_array($results, MYSQL_ASSOC)) {
+            $results = $db->query("SELECT `house_id`, `house_address` FROM " . TABLE_DESC);
+            while ($row = $results->fetch_assoc()) {
                 echo "<li><a href=\"/admin/?house_id=" . $row['house_id'] . '">' . $row['house_address'] . "</a></li>\n";
             }
-            echo "</ul>\n<p><a href=\"http://start.yorkstudenthomes.com/\">Go to Start Page</a><br /><a href=\"http://mail.yorkstudenthomes.com/\">Go to Mailbox</a><br /><a href=\"http://calendar.yorkstudenthomes.com/\">Go to Calendar</a></p>\n";
+            echo "</ul>\n<p><a href=\"http://mail.yorkstudenthomes.com/\">Go to Mailbox</a><br /><a href=\"http://calendar.yorkstudenthomes.com/\">Go to Calendar</a></p>\n";
         }
     } else {
 ?>
