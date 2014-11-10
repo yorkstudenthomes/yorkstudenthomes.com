@@ -1,6 +1,14 @@
 {
     "require": {
         "php": "~5.6.0",
-        "ext-gd": "*"
+        "ext-gd": "*",
+        "slim/slim": "2.*",
+        "slim/views": "0.1.*",
+        "twig/twig": "~1.0"
+    },
+    "extra": {
+        "heroku": {
+            "document-root": "public"
+        }
     }
 }
