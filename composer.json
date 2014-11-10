@@ -6,6 +6,11 @@
         "slim/views": "0.1.*",
         "twig/twig": "~1.0"
     },
+    "autoload": {
+        "psr-4": {
+            "Starsquare\\": "src/"
+        }
+    },
     "extra": {
         "heroku": {
             "document-root": "public"
