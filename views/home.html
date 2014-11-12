@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div id="left">
+    <h2>{{ home.address }}</h2>
+    <h3>{{ home.type }}</h3>
+
+    {% if home.rented %}
+    <div class="info">
+        <h3>House Unavailable</h3>
+        <p>This house has already been rented out for this year. Please have a look at some of our other houses!</p>
+    </div>
+    {% endif %}
+
+    <p id="desc">{{ home.description }}</p>
+
+    {% for bill in bills %}
+    <strong class="price">£{{ bill.value | replace({'-' : '–'}) }} per room per week (plus bills){% if bill.description %} — {{ bill.description }}{% endif %}</strong>
+    {% endfor %}
+
+    <ul>
+        {% for feature in features %}
+        <li>{{ feature }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

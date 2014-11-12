@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Homes</h2>
+
+<ul>
+{%for home in homes %}
+    <li><a href="{{ home.url }}/">{{ home.text }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
