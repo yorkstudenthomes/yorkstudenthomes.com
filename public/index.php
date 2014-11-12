@@ -49,4 +49,12 @@ $app->get('/homes/:home/', function ($slug) use ($app) {
     ));
 });
 
+$app->get('/accommodation-for-students/', function () use ($app) {
+    $app->render('afs.html');
+});
+
+$app->get('/contact/', function () use ($app) {
+    $app->render('contact.html');
+});
+
 $app->run();
