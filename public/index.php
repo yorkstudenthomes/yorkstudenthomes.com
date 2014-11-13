@@ -57,4 +57,17 @@ $app->get('/contact/', function () use ($app) {
     $app->render('contact.html');
 });
 
+$app->get('/maps/', function () use ($app) {
+    $homes = $app->db->query('select house_address, postcode from description order by house_order')->fetchAll(PDO::FETCH_FUNC, function ($address, $postcode) {
+        return array(
+            'url'  => 'https://www.google.co.uk/maps/place/' . urlencode("$address, York $postcode"),
+            'text' => $address,
+        );
+    });
+    $app->render('maps.html', array(
+        'title' => 'Maps',
+        'homes' => $homes,
+    ));
+});
+
 $app->run();
