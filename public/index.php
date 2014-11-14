@@ -42,6 +42,11 @@ $app->group('/homes/:home', function () use ($app) {
         $stmt = $app->db->prepare('select house_id, house_address as address, rented, type, description, feature from description inner join feature using (house_id) where slug = ? order by feature_id');
         $stmt->execute(array($slug));
         $features = $stmt->fetchAll();
+
+        if (!count($features)) {
+            $app->notFound();
+        }
+
         $home = $features[0];
 
         // room bills
@@ -89,6 +94,10 @@ $app->group('/homes/:home', function () use ($app) {
 
         $images = images($home);
         $key = array_search($image, $images);
+
+        if (!$address || $key === false) {
+            $app->notFound();
+        }
 
         $app->render('image.html', array(
             'type'     => 'Image',
