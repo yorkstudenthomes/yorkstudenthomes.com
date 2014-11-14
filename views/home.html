@@ -30,4 +30,14 @@
     <p><a href="/plans/{{ request.home }}.pdf">View house plans</a></p>
     {% endif %}
 </div>
+
+<div id="right">
+    {% for image in images %}
+    <a href="/homes/{{ request.home }}/images/{{ image }}"><img src="/images/{{ request.home }}/{{ image }}_thumb.jpg" alt="Image of {{ house.address }}" /></a>
+    {% endfor %}
+
+    {% for type, rating in ratings %}
+    <a href="/homes/{{ request.home }}/images/{{ type }}"><img src="/images/epc/{{ type }}/{{ rating.current }}_{{ rating.potential }}_thumb.png" alt="{{ type | upper }} graph of {{ home.address }}" /></a>
+    {% endfor %}
+</div>
 {% endblock %}

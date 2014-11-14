@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% set title = type ~ ' of ' ~ address %}
+
+{% block content %}
+{% if previous %}
+<a style="float: left" href="{{ previous }}">« Previous image</a>
+{% endif %}
+{% if next %}
+<a style="float: right" href="{{ next }}">Next image »</a>
+{% endif %}
+
+<div id="img">
+    <h2>{{ type }} of {{ address }}</h2>
+    <img src="/images/{{ image | default(request.home ~ '/' ~ request.image ~ '.jpg') }}" alt="Image of {{ address }}" />
+</div>
+{% endblock %}

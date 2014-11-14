@@ -2,6 +2,12 @@
 
 require '../vendor/autoload.php';
 
+function images($home) {
+    return array_map(function ($path) {
+        return basename($path, '_thumb.jpg');
+    }, glob(__DIR__ . "/images/$home/*_thumb.jpg"));
+}
+
 $app = new Starsquare\App(array(
     'view' => new \Slim\Views\Twig(),
     'templates.path' => '../views',
@@ -30,24 +36,67 @@ $app->get('/homes/', function () use ($app) {
     ));
 });
 
-$app->get('/homes/:home/', function ($slug) use ($app) {
-    $stmt = $app->db->prepare('select house_id, house_address as address, rented, type, description, feature from description inner join feature using (house_id) where slug = ? order by feature_id');
-    $stmt->execute(array($slug));
-    $features = $stmt->fetchAll();
-    $home = $features[0];
+$app->group('/homes/:home', function () use ($app) {
+    $app->get('/', function ($slug) use ($app) {
+        // description / features
+        $stmt = $app->db->prepare('select house_id, house_address as address, rented, type, description, feature from description inner join feature using (house_id) where slug = ? order by feature_id');
+        $stmt->execute(array($slug));
+        $features = $stmt->fetchAll();
+        $home = $features[0];
 
-    $stmt = $app->db->prepare('select room_price as value, room_description as description from bill where house_id = ? order by room_price');
-    $stmt->execute(array($home['house_id']));
-    $bills = $stmt->fetchAll();
+        // room bills
+        $stmt = $app->db->prepare('select room_price as value, room_description as description from bill where house_id = ? order by room_price');
+        $stmt->execute(array($home['house_id']));
+        $bills = $stmt->fetchAll();
 
-    $app->render('home.html', array(
-        'home'     => $home,
-        'bills'    => $bills,
-        'plans'    => is_file(__DIR__ . "/plans/$slug.pdf"),
-        'features' => array_map(function ($row) {
-            return $row['feature'];
-        }, $features),
-    ));
+        // energy ratings
+        $stmt = $app->db->prepare('select * from epc where house_id = ?');
+        $stmt->execute(array($home['house_id']));
+        $ratings = $stmt->fetch();
+
+        $app->render('home.html', array(
+            'title'    => $home['address'],
+            'home'     => $home,
+            'bills'    => $bills,
+            'plans'    => is_file(__DIR__ . "/plans/$slug.pdf"),
+            'features' => array_map(function ($row) {
+                return $row['feature'];
+            }, $features),
+            'ratings'  => array(
+                'eer' => array('current' => $ratings['eer_current'], 'potential' => $ratings['eer_potential']),
+                'eir' => array('current' => $ratings['eir_current'], 'potential' => $ratings['eir_potential']),
+            ),
+            'images' => images($slug),
+        ));
+    });
+
+    $app->get('/images/:rating', function ($home, $rating) use ($app) {
+        $stmt = $app->db->prepare('select house_address, epc.* from description inner join epc using(house_id) where slug = ?');
+        $stmt->execute(array($home));
+        $details = $stmt->fetch();
+
+        $app->render('image.html', array(
+            'type'     => strtoupper($rating) . ' Graph',
+            'address'  => $details['house_address'],
+            'image'    => "epc/$rating/" . $details[$rating . '_current'] . '_' . $details[$rating . '_potential'] . '.png',
+        ));
+    })->conditions(array('rating' => 'e[ei]r'));
+
+    $app->get('/images/:image', function ($home, $image) use ($app) {
+        $stmt = $app->db->prepare('select house_address from description where slug = ?');
+        $stmt->execute(array($home));
+        $address = $stmt->fetchColumn();
+
+        $images = images($home);
+        $key = array_search($image, $images);
+
+        $app->render('image.html', array(
+            'type'     => 'Image',
+            'address'  => $address,
+            'previous' => isset($images[$key - 1]) ? $images[$key - 1] : false,
+            'next'     => isset($images[$key + 1]) ? $images[$key + 1] : false,
+        ));
+    });
 });
 
 $app->get('/accommodation-for-students/', function () use ($app) {
