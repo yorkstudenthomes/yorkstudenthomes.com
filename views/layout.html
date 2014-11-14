@@ -20,7 +20,7 @@
         <div id="nav">
             <div id="navright">
                 <ul>
-                {% for link in site.nav %}
+                {% for link in navigation %}
                     <li{%if link.selected %} id="selected"{% endif %}><a href="{{ link.url }}"><b>{{ link.text }}</b></a></li>
                 {% endfor %}
                 </ul>
