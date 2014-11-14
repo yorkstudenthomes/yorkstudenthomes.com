@@ -23,5 +23,11 @@
         <li>{{ feature }}</li>
         {% endfor %}
     </ul>
+
+    <p id="email">Email for details about {{ home.address }}: <a href="mailto:{{ request.home }}@yorkstudenthomes.com">{{ request.home }}@yorkstudenthomes.com</a></p>
+
+    {% if plans %}
+    <p><a href="/plans/{{ request.home }}.pdf">View house plans</a></p>
+    {% endif %}
 </div>
 {% endblock %}

@@ -43,6 +43,7 @@ $app->get('/homes/:home/', function ($slug) use ($app) {
     $app->render('home.html', array(
         'home'     => $home,
         'bills'    => $bills,
+        'plans'    => is_file(__DIR__ . "/plans/$slug.pdf"),
         'features' => array_map(function ($row) {
             return $row['feature'];
         }, $features),
