@@ -23,6 +23,7 @@ class App extends \Slim\Slim {
 
         $this->hook('slim.before.dispatch', function () {
             $this->view->setData('site', $this->config('site'));
+            $this->view->setData('request', $this->router->getCurrentRoute()->getParams());
         });
     }
 }
