@@ -1,0 +1,10 @@
+Auth middleware
+Sitemap
+JavaScript
+CSS
+Debug/Environment
+Error pages (404/403/500)
+Redirect improvements
+    /admin/ => /admin(/login)
+    /homes/:home/plans.pdf => /plans/:home.pdf
+Database migration
