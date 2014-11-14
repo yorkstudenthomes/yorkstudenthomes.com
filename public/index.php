@@ -22,7 +22,7 @@ $app->get('/', function () use ($app) {
 });
 
 $app->get('/homes/', function () use ($app) {
-    $homes = $app->db->query('select slug as url, house_address as text from description order by house_order')->fetchAll(PDO::FETCH_ASSOC);
+    $homes = $app->db->query('select slug as url, house_address as text from description order by house_order')->fetchAll();
 
     $app->render('homes.html', array(
         'title' => 'Homes',
@@ -33,12 +33,12 @@ $app->get('/homes/', function () use ($app) {
 $app->get('/homes/:home/', function ($slug) use ($app) {
     $stmt = $app->db->prepare('select house_id, house_address as address, rented, type, description, feature from description inner join feature using (house_id) where slug = ? order by feature_id');
     $stmt->execute(array($slug));
-    $features = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $features = $stmt->fetchAll();
     $home = $features[0];
 
     $stmt = $app->db->prepare('select room_price as value, room_description as description from bill where house_id = ? order by room_price');
     $stmt->execute(array($home['house_id']));
-    $bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $bills = $stmt->fetchAll();
 
     $app->render('home.html', array(
         'home'     => $home,

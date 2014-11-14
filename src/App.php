@@ -2,6 +2,8 @@
 
 namespace Starsquare;
 
+use PDO;
+
 class App extends \Slim\Slim {
 
     public function __construct(array $options) {
@@ -18,7 +20,10 @@ class App extends \Slim\Slim {
 
             $url = parse_url($db);
             $dsn = 'mysql:host=' . $url['host'] . ';dbname=' . substr($url['path'], 1);
-            return new \PDO($dsn, $url['user'], $url['pass']);
+
+            $db = new PDO($dsn, $url['user'], $url['pass']);
+            $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            return $db;
         });
 
         $this->hook('slim.before.dispatch', function () {
