@@ -47,7 +47,10 @@ $app->hook('slim.before.dispatch', function () use ($app) {
 });
 
 $app->get('/', function () use ($app) {
-    $app->render('index.html');
+    $available = $app->db->query('select count(*) from description where rented = 0')->fetchColumn();
+    $app->render('index.html', array(
+        'all_rented' => ($available == 0),
+    ));
 });
 
 $app->get('/homes/', function () use ($app) {
