@@ -43,7 +43,7 @@
 
 		<div id="footer">
 			<p id="copyright">Copyright © {{ site.name }} 2008–{{ 'now' | date('Y') }}. All rights reserved.
-                <a id="admin-link" href="{{ admin.link }}">{{ admin.text }}</a>
+                <a id="admin-link" href="{{ admin.link | default('/admin/login') }}">{{ admin.text | default('Admin') }}</a>
                 <a id="afs-link" href="/accommodation-for-students/">Accommodation for Students</a>
             </p>
 			<p id="siteby">Site by <a href="http://starsquare.co.uk">StarSquare Designs</a>.</p>

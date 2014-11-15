@@ -12,9 +12,15 @@ $app = new Starsquare\App(array(
     'view' => new \Slim\Views\Twig(),
     'templates.path' => '../views',
     'db' => getenv('CLEARDB_DATABASE_URL'),
+    'auth' => array(
+        'passwords' => getenv('YSH_ADMIN_PASSWORDS'),
+    ),
     'site' => array(
         'name' => 'York Student Homes',
         'tagline' => 'A great place to find a great place to live!',
+    ),
+    'messages' => array(
+        'INVALID_PASSWORD' => 'The password was incorrect.',
     ),
 ));
 
@@ -153,6 +159,30 @@ $app->get('/maps/', function () use ($app) {
         'title' => 'Maps',
         'homes' => $homes,
     ));
+});
+
+$app->get('/admin', $app->auth, function () use ($app) {
+    $app->render('admin.html', array(
+        'admin' => array(
+            'link' => '/admin/logout',
+            'text' => 'Log out',
+        ),
+    ));
+});
+
+$app->map('/admin/login', function () use ($app) {
+    if ($app->login()) {
+        $app->redirect('/admin');
+    }
+
+    $app->render('login.html', array(
+        'title' => 'Log In',
+    ));
+})->via('GET', 'POST');
+
+$app->get('/admin/logout', function () use ($app) {
+    $app->logout();
+    $app->redirect('/');
 });
 
 $app->run();

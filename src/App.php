@@ -30,5 +30,55 @@ class App extends \Slim\Slim {
             $this->view->setData('site', $this->config('site'));
             $this->view->setData('request', $this->router->getCurrentRoute()->getParams());
         });
+
+        $this->container->singleton('auth', function () {
+            return function ($route) {
+                session_start();
+
+                if (!isset($_SESSION['auth'])) {
+                    $this->notFound();
+                }
+            };
+        });
+    }
+
+    protected function message($key) {
+        $messages = $this->config('messages');
+        return $messages[$key];
+    }
+
+    public function login() {
+        if ($this->request->isPost()) {
+            $config = $this->config('auth');
+
+            $valid = $config['passwords'];
+            if (is_string($valid)) {
+                $valid = preg_split('/[^a-f0-9]/', $valid);
+            }
+
+            if (!is_array($valid)) {
+                throw new \Exception('Missing auth config');
+            }
+
+            $field = (isset($config['field']) ? $config['field'] : 'password');
+            $password = $this->request->post($field);
+
+            if (!in_array(md5($password), $valid)) {
+                $this->flashNow('error', $this->message('INVALID_PASSWORD'));
+                return false;
+            }
+
+
+            session_start();
+            $_SESSION['auth'] = true;
+            session_write_close();
+            return true;
+        }
+    }
+
+    public function logout() {
+        session_start();
+        $_SESSION = array();
+        session_destroy();
     }
 }
