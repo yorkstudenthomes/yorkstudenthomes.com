@@ -2,6 +2,9 @@
 
 require '../vendor/autoload.php';
 
+use Aptoma\Twig\Extension\MarkdownExtension,
+    Starsquare\Twig\Extension\MarkdownEngine;
+
 function images($home) {
     return array_map(function ($path) {
         return basename($path, '_thumb.jpg');
@@ -23,6 +26,8 @@ $app = new Starsquare\App(array(
         'INVALID_PASSWORD' => 'The password was incorrect.',
     ),
 ));
+
+$app->view->parserExtensions[] = new MarkdownExtension(new MarkdownEngine());
 
 $app->hook('slim.before.dispatch', function () use ($app) {
     $stmt = $app->db->query('select setting, value from setting');
