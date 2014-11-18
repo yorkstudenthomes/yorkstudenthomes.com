@@ -44,6 +44,10 @@ class Epc {
         $image->drawImage($this->drawPolygon('current'));
         $image->drawImage($this->drawPolygon('potential'));
 
+        if ($this->size == 'thumb') {
+            $image->scaleImage(150, 0);
+        }
+
         $response->headers->set('Content-Type', 'image/png');
         $response->setBody($image->getImageBlob());
     }
@@ -52,10 +56,21 @@ class Epc {
         $value = $this->$type;
         $color = $this->getColor($value);
 
+        // arrow
         $draw = new \ImagickDraw();
         $draw->setFillColor($color);
         $draw->setStrokeColor($color);
         $draw->polygon($this->getPoints($type, $value));
+
+        // label
+        $draw->setStrokeColor('none');
+        $draw->setFillColor('white');
+        $draw->setFontSize(32);
+        $draw->setFont('Arial-Bold');
+
+        $x = ($type == 'current' ? 336 : 419);
+        $y = 12 - $this->getOffset($value);
+        $draw->annotation($x, $y, $value);
 
         return $draw;
     }
@@ -70,6 +85,24 @@ class Epc {
         return 'black';
     }
 
+    protected function getOffset($value) {
+        $sizes = array_keys($this->colors[$this->rating]);
+        $rangeHeight = 31;
+        $rangeGap = 7;
+        $offset = -363; // for 0
+
+        foreach ($sizes as $key => $size) {
+            if ($value <= $size) {
+                $lastSize = ($key > 0 ? $sizes[$key - 1] : 0);
+                return $offset + ($rangeHeight * ($value - $lastSize) / ($size - $lastSize));
+            }
+
+            $offset += $rangeHeight + $rangeGap;
+        }
+
+        return $offset;
+    }
+
     protected function getPoints($type, $value) {
         // polygon points; (0, 0) is the arrow tip
         $xs = array(0, 15, 73,  73,  15);
@@ -77,25 +110,7 @@ class Epc {
 
         // offsets
         $xOffset = ($type == 'current' ? 318 : 401);
-        $yOffset = -363; // for 0
-
-        // rating range sizes (G-A) (todo use color ranges)
-        $sizes = array(20, 18, 16, 14, 12, 11, 9);
-        $rangeHeight = 31;
-        $rangeGap = 7;
-        $total = 0;
-
-        foreach ($sizes as $size) {
-            if ($value <= $total + $size) {
-                $yOffset += ($rangeHeight * ($value - $total) / $size);
-                break;
-            } else {
-                $yOffset += $rangeHeight + $rangeGap;
-            }
-
-            $total += $size;
-        }
-
+        $yOffset = $this->getOffset($value);
         $points = array();
 
         foreach ($xs as $key => $x) {
