@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Homes Administration</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <fieldset>
+        <legend>Site settings</legend>
+
+        {% if flash.error %}
+        <div class="error">
+            <strong>There were errors with your details:</strong>
+
+            <ul>
+                <li>{{ flash.error }}</li>
+            <ul>
+        </div>
+        {% endif %}
+
+        <label for="year">Academic year</label>
+        <input id="year" name="year" type="text" value="{{ setting.year }}" /><br />
+
+        <label for="submit"></label>
+        <input type="submit" name="submit" value="Save" id="submit" /><br />
+    </fieldset>
+</form>
+
+<ul>
+{%for home in homes %}
+    <li><a href="/admin/homes/{{ home.url }}">{{ home.text }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

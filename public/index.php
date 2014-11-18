@@ -166,14 +166,29 @@ $app->get('/maps/', function () use ($app) {
     ));
 });
 
-$app->get('/admin', $app->auth, function () use ($app) {
-    $app->render('admin.html', array(
+$app->map('/admin', $app->auth, function () use ($app) {
+    if ($app->request->isPost()) {
+        $stmt = $app->db->prepare('update setting set value = ? where setting = ?');
+        $settings = $app->request->params();
+
+        foreach ($settings as $key => $value) {
+            $stmt->execute(array($value, $key));
+        }
+
+        // update view data
+        $app->view->setData('setting', $settings);
+    }
+
+    $homes = $app->db->query('select slug as url, house_address as text from description order by house_order')->fetchAll();
+
+    $app->render('admin/settings.html', array(
+        'homes' => $homes,
         'admin' => array(
             'link' => '/admin/logout',
             'text' => 'Log out',
         ),
     ));
-});
+})->via('GET', 'POST');
 
 $app->map('/admin/login', function () use ($app) {
     if ($app->login()) {
