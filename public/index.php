@@ -190,6 +190,23 @@ $app->map('/admin', $app->auth, function () use ($app) {
     ));
 })->via('GET', 'POST');
 
+$app->map('/admin/homes/:home', $app->auth, function ($slug) use ($app) {
+    $stmt = $app->db->prepare('select house_id, house_address as address, rented, type, description, feature from description inner join feature using (house_id) where slug = ? order by feature_id');
+    $stmt->execute(array($slug));
+    $features = $stmt->fetchAll();
+
+    if (!count($features)) {
+        $app->notFound();
+    }
+
+    $home = $features[0];
+
+    $app->render('admin/home.html', array(
+        'home'  => $home,
+        'title' => $home['address'],
+    ));
+})->via('GET', 'POST');
+
 $app->map('/admin/login', function () use ($app) {
     if ($app->login()) {
         $app->redirect('/admin');
