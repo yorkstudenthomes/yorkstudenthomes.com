@@ -50,16 +50,16 @@ h4 {
 
 fieldset fieldset legend {
     font-weight: bold;
-    font-style: italic;
     padding-top: 10px;
     margin-bottom: 5px;
+    padding-left: 0;
 }
 
 hr {
     display: none;
 }
 
-acronym, acronym a {
+abbr, abbr a {
     cursor: help;
     border-bottom: 1px dashed !important;
 }
@@ -332,7 +332,7 @@ fieldset #yes {
     font-weight: bold;
 }
 
-fieldset em {
+fieldset .explain {
     display: block;
     color: #666;
     margin-bottom: 20px;
@@ -539,4 +539,14 @@ td {
 
 #epc input {
     width: 4em;
+}
+
+#main p.dynamic-row {
+    margin-bottom: 0;
+}
+
+.dynamic-row:after {
+    content: "";
+    display: table;
+    clear: both;
 }

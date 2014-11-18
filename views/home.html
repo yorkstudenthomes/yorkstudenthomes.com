@@ -20,7 +20,7 @@
 
     <ul>
         {% for feature in features %}
-        <li>{{ feature | markdown }}</li>
+        <li>{{ feature.description | markdown }}</li>
         {% endfor %}
     </ul>
 
