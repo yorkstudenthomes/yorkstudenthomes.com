@@ -11,6 +11,49 @@ function images($home) {
     }, glob(__DIR__ . "/images/$home/*_thumb.jpg"));
 }
 
+function renderHome($app, $template) {
+    return function ($slug) use ($app, $template) {
+        // description / features
+        $stmt = $app->db->prepare('select house_id, house_address as address, rented, type, description, feature_id, feature from description inner join feature using (house_id) where slug = ? order by feature_id');
+        $stmt->execute(array($slug));
+        $features = $stmt->fetchAll();
+
+        if (!count($features)) {
+            $app->notFound();
+        }
+
+        $home = $features[0];
+
+        // room bills
+        $stmt = $app->db->prepare('select bill_id as id, room_price as value, room_description as description from bill where house_id = ? order by room_price');
+        $stmt->execute(array($home['house_id']));
+        $bills = $stmt->fetchAll();
+
+        // energy ratings
+        $stmt = $app->db->prepare('select * from epc where house_id = ?');
+        $stmt->execute(array($home['house_id']));
+        $ratings = $stmt->fetch();
+
+        $app->render($template, array(
+            'title'    => $home['address'],
+            'home'     => $home,
+            'bills'    => $bills,
+            'plans'    => is_file(__DIR__ . "/plans/$slug.pdf"),
+            'features' => array_map(function ($row) {
+                return array(
+                    'id'          => $row['feature_id'],
+                    'description' => $row['feature'],
+                );
+            }, $features),
+            'ratings'  => array(
+                'eer' => array('current' => $ratings['eer_current'], 'potential' => $ratings['eer_potential']),
+                'eir' => array('current' => $ratings['eir_current'], 'potential' => $ratings['eir_potential']),
+            ),
+            'images' => images($slug),
+        ));
+    };
+}
+
 $app = new Starsquare\App(array(
     'view' => new \Slim\Views\Twig(),
     'templates.path' => '../views',
@@ -74,43 +117,7 @@ $app->get('/homes/', function () use ($app) {
 });
 
 $app->group('/homes/:home', function () use ($app) {
-    $app->get('/', function ($slug) use ($app) {
-        // description / features
-        $stmt = $app->db->prepare('select house_id, house_address as address, rented, type, description, feature from description inner join feature using (house_id) where slug = ? order by feature_id');
-        $stmt->execute(array($slug));
-        $features = $stmt->fetchAll();
-
-        if (!count($features)) {
-            $app->notFound();
-        }
-
-        $home = $features[0];
-
-        // room bills
-        $stmt = $app->db->prepare('select room_price as value, room_description as description from bill where house_id = ? order by room_price');
-        $stmt->execute(array($home['house_id']));
-        $bills = $stmt->fetchAll();
-
-        // energy ratings
-        $stmt = $app->db->prepare('select * from epc where house_id = ?');
-        $stmt->execute(array($home['house_id']));
-        $ratings = $stmt->fetch();
-
-        $app->render('home.html', array(
-            'title'    => $home['address'],
-            'home'     => $home,
-            'bills'    => $bills,
-            'plans'    => is_file(__DIR__ . "/plans/$slug.pdf"),
-            'features' => array_map(function ($row) {
-                return $row['feature'];
-            }, $features),
-            'ratings'  => array(
-                'eer' => array('current' => $ratings['eer_current'], 'potential' => $ratings['eer_potential']),
-                'eir' => array('current' => $ratings['eir_current'], 'potential' => $ratings['eir_potential']),
-            ),
-            'images' => images($slug),
-        ));
-    });
+    $app->get('/', renderHome($app, 'home.html'));
 
     $app->get('/images/:rating', function ($home, $rating) use ($app) {
         $stmt = $app->db->prepare('select house_address, epc.* from description inner join epc using(house_id) where slug = ?');
@@ -190,22 +197,7 @@ $app->map('/admin', $app->auth, function () use ($app) {
     ));
 })->via('GET', 'POST');
 
-$app->map('/admin/homes/:home', $app->auth, function ($slug) use ($app) {
-    $stmt = $app->db->prepare('select house_id, house_address as address, rented, type, description, feature from description inner join feature using (house_id) where slug = ? order by feature_id');
-    $stmt->execute(array($slug));
-    $features = $stmt->fetchAll();
-
-    if (!count($features)) {
-        $app->notFound();
-    }
-
-    $home = $features[0];
-
-    $app->render('admin/home.html', array(
-        'home'  => $home,
-        'title' => $home['address'],
-    ));
-})->via('GET', 'POST');
+$app->map('/admin/homes/:home', $app->auth, renderHome($app, 'admin/home.html'))->via('GET', 'POST');
 
 $app->map('/admin/login', function () use ($app) {
     if ($app->login()) {
