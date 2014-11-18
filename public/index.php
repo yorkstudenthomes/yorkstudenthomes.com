@@ -120,7 +120,7 @@ $app->group('/homes/:home', function () use ($app) {
         $app->render('image.html', array(
             'type'     => strtoupper($rating) . ' Graph',
             'address'  => $details['house_address'],
-            'image'    => "epc/$rating/" . $details[$rating . '_current'] . '_' . $details[$rating . '_potential'] . '.png',
+            'image'    => "/epc/$rating/" . $details[$rating . '_current'] . '/' . $details[$rating . '_potential'],
         ));
     })->conditions(array('rating' => 'e[ei]r'));
 
@@ -189,5 +189,10 @@ $app->get('/admin/logout', function () use ($app) {
     $app->logout();
     $app->redirect('/');
 });
+
+$app->get('/epc/:type/:current/:potential(/:size)', function ($type, $current, $potential, $size = 'regular') use ($app) {
+    $epc = new Starsquare\Epc($type, $current, $potential, $size);
+    $epc->draw($app->response);
+})->conditions(array('type' => 'e[ei]r', 'current' => '\d+', 'potential' => '\d+'));
 
 $app->run();

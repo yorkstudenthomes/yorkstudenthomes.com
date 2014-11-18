@@ -37,7 +37,7 @@
     {% endfor %}
 
     {% for type, rating in ratings %}
-    <a href="/homes/{{ request.home }}/images/{{ type }}"><img src="/images/epc/{{ type }}/{{ rating.current }}_{{ rating.potential }}_thumb.png" alt="{{ type | upper }} graph of {{ home.address }}" /></a>
+    <a href="/homes/{{ request.home }}/images/{{ type }}"><img src="/epc/{{ type }}/{{ rating.current }}/{{ rating.potential }}/thumb" alt="{{ type | upper }} graph of {{ home.address }}" /></a>
     {% endfor %}
 </div>
 {% endblock %}
