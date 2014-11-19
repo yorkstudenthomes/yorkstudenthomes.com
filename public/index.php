@@ -198,6 +198,7 @@ $app->map('/admin', $app->auth, function () use ($app) {
     $homes = $app->db->query('select slug as url, house_address as text from description order by house_order')->fetchAll();
 
     $app->render('admin/settings.html', array(
+        'title' => 'Admin',
         'homes' => $homes,
         'admin' => array(
             'link' => '/admin/logout',
@@ -205,6 +206,19 @@ $app->map('/admin', $app->auth, function () use ($app) {
         ),
     ));
 })->via('GET', 'POST');
+
+$app->get('/admin/markup', $app->auth, function () use ($app) {
+    $app->render('markup.html', array(
+        'title' => 'Markup Help',
+        'examples' => array(
+            'Plain link: <http://starsquare.co.uk>',
+            'Or [links with text](http://starsquare.co.uk)',
+            'This is **bold text**',
+            'This is *italic text*',
+            'Other typography niceness -- such as "smart quotes"',
+        ),
+    ));
+});
 
 $app->post('/admin/markup', $app->auth, function () use ($app) {
     $params = $app->request->params();

@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Markup Help</h2>
+
+<p>You can include some simple formatting of the features, tagline and description of a home.
+The following table gives some examples of how to use these formatting tags.</p>
+
+<p>For more details, see <a href="https://michelf.ca/projects/php-markdown/reference/">Michel Fortin’s Markdown Reference</a>.</p>
+
+<table class="markup">
+    <tr><th>Markup</th><th>Produces</th></tr>
+    {% for example in examples %}
+    <tr><td><code>{{ example }}</code></td><td>{{ example | markdown }}</td></tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
