@@ -75,14 +75,21 @@ $app = new Starsquare\App(array(
 $app->view->parserExtensions[] = new MarkdownExtension(new MarkdownEngine());
 
 $app->hook('slim.before.dispatch', function () use ($app) {
+    // remove trailing slash
+    $path = $app->request->getPath();
+    if (substr($path, -1) == '/' && $path != '/') {
+        $app->redirect(substr($path, 0, -1), 301);
+    }
+
+    // site settings
     $stmt = $app->db->query('select setting, value from setting');
     $app->view->setData('setting', $stmt->fetchAll(PDO::FETCH_KEY_PAIR));
 
     // get homes
     $navigation = $app->db->query('select slug, house_address from description order by house_order')->fetchAll(PDO::FETCH_FUNC, function ($url, $address) {
         return array(
-            'url' => "/homes/$url/",
-            'text' => str_replace('Street', 'St', $address)
+            'url' => "/homes/$url",
+            'text' => str_replace('Street', 'St', $address),
         );
     });
 
@@ -93,8 +100,8 @@ $app->hook('slim.before.dispatch', function () use ($app) {
     ));
 
     // find selected
-    array_walk($navigation, function (&$link) use ($app) {
-        if (strpos($app->request->getPath(), $link['url']) === 0) {
+    array_walk($navigation, function (&$link) use ($path) {
+        if (strpos($path, $link['url']) === 0) {
             $link['selected'] = true;
         }
     });
