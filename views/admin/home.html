@@ -1,10 +1,22 @@
 {% extends 'layout.html' %}
 
+{% block scripts %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="/js/admin.js"></script>
+{% endblock %}
+
 {% block content %}
 <h2>Homes Administration</h2>
 <h3>{{ home.address }}</h3>
 
 <p><a href="/admin">Back to homes administration</a></p>
+
+{% if flash.success %}
+<div class="success">
+    <h4>Details Saved</h4>
+    <p>{{ flash.success }}</p>
+</div>
+{% endif %}
 
 <form id="details" method="post" enctype="multipart/form-data">
     <fieldset>
@@ -15,7 +27,9 @@
             <strong>There were errors with your details:</strong>
 
             <ul>
-                <li>{{ flash.error }}</li>
+            {% for err in flash.error %}
+                <li>{{ err }}</li>
+            {% endfor %}
             <ul>
         </div>
         {% endif %}
@@ -25,81 +39,82 @@
             <h4>Property is rented</h4>
             <p>This property is marked as rented.</p>
 
-            <input id="set_available" type="submit" value="Make available again" />
+            <input id="set_available" name="set_available" type="submit" value="Make available again" />
         {% else %}
-            <input id="set_rented" type="button" value="Mark this property as rented" />
+            <input id="confirm_rented" type="button" value="Mark this property as rented" />
+
+            <div id="confirm_dialog" class="info hidden">
+                <h4>Confirm this property as rented</h4>
+                <p>This property will be marked as rented. This will place a message box on the page for this home.</p>
+                <p>Are you sure you want to continue?</p>
+
+                <input type="submit" value="Yes" id="set_rented" name="set_rented" >
+                <input type="button" value="No" id="cancel_rented" />
+            </div>
         {% endif %}
         </div>
-
-        <input type="hidden" name="house_id" value="{{ home.id }}" />
-        <input type="hidden" id="is_rented" name="is_rented" value="{{ home.rented }}" />
 
         <fieldset id="description">
             <legend>Description</legend>
             <p class="explain">Enter the tagline and main description for the property.</p>
 
-            <textarea id="house_type" name="house_type" rows="6" cols="35">{{ home.type }}</textarea>
+            <textarea id="house_type" name="house_type" class="{{ flash.error.house_type ? 'error' : ''}}" rows="6" cols="35">{{ home.type }}</textarea>
             <span class="feature" id="preview_house_type">{{ home.type | markdown }}</span><br />
 
-            <textarea id="house_desc" name="house_desc" rows="6" cols="35">{{ home.description }}</textarea>
+            <textarea id="house_desc" name="house_desc" rows="6" cols="35" class="{{ flash.error.house_desc ? 'error' : ''}}">{{ home.description }}</textarea>
             <span class="feature" id="preview_house_desc">{{ home.description | markdown }}</span>
         </fieldset>
 
-        <fieldset id="epc" class="hidden">
+        <fieldset id="epc">
             <legend>EPC Details</legend>
             <p class="explain">Enter the EPC details for the property here.</p>
 
             <label for="ec">EER Current</label>
-            <input id="ec" name="epc[ec]" value="{{ ratings.eer.current }}" />
+            <input id="ec" name="epc[ec]" class="{{ flash.error.epc_ec ? 'error' : ''}}" value="{{ ratings.eer.current }}" />
 
             <label for="ep">EER Potential</label>
-            <input id="ep" name="epc[ep]" value="{{ ratings.eer.potential }}" /><br />
+            <input id="ep" name="epc[ep]" class="{{ flash.error.epc_ep ? 'error' : ''}}" value="{{ ratings.eer.potential }}" /><br />
 
             <label for="ic">EIR Current</label>
-            <input id="ic" name="epc[ic]" value="{{ ratings.eir.current }}" />
+            <input id="ic" name="epc[ic]" class="{{ flash.error.epc_ic ? 'error' : ''}}" value="{{ ratings.eir.current }}" />
 
             <label for="ip">EER Potential</label>
-            <input id="ip" name="epc[ip]" value="{{ ratings.eir.potential }}" />
+            <input id="ip" name="epc[ip]" class="{{ flash.error.epc_ip ? 'error' : ''}}"  value="{{ ratings.eir.potential }}" />
         </fieldset>
 
-        <fieldset id="bills">
+        <fieldset>
             <legend>Bills</legend>
-            <p class="explain">Leave the text blank to simply show that price. Enter a text description to describe more than one bill for a particular house, e.g. “Room with en-suite”. For a range of prices, enter the prices separated by a hyphen, e.g. “55-65”.</p>
-
-            <input type="hidden" name="next_bill" id="next_bill" value="" />
+            <p class="explain">Leave the text blank to simply show that price.
+            Enter a text description to describe more than one bill for a particular house,
+            e.g. “Room with en-suite”. For a range of prices, enter the prices separated by a hyphen, e.g. “55-65”.</p>
 
             {% for bill in bills %}
             <p class="dynamic-row">
-                <label class="forprice" for="bill_{{ bill.idi}}_price">£</label>
-                <input id="bill_{{ bill.id }}_price" class="bill_price" name="bill[{{ bill.id }}][price]" value="{{ bill.value }}" />
+                <label class="for_price" for="bill_{{ bill.id }}_price">£</label>
+                <input id="bill_{{ bill.id }}_price" class="bill_price {{ flash.error['bill_' ~ bill.id] ? 'error' : '' }}" name="bill[{{ bill.id }}][price]" value="{{ bill.value }}" />
 
-                <label class="bill_desc" for="bill_{{ bill.id }}_desc">Description</label>
-                <input id="bill_{{ bill.id }}_desc" name="bill[{{ bill.id }}][desc]" value="{{ bill.description }}" />
+                <label class="for_desc" for="bill_{{ bill.id }}_desc">Description</label>
+                <input id="bill_{{ bill.id }}_desc" class="bill_desc" name="bill[{{ bill.id }}][desc]" value="{{ bill.description }}" />
 
-                {% if bills | length > 1 %}
-                <a class="remove_link" href="#">remove</a>
-                {% endif %}
+                <a class="remove_link" {% if bills | length == 1 %}class="hidden"{% endif %} href="#">remove</a>
             </p>
             {% endfor %}
-            <p><a id="bill_link" href="#">add</a></p>
+            <p><a id="add_bill" href="#">add</a></p>
         </fieldset>
 
         <fieldset>
             <legend>Features</legend>
-            <p class="explain">Write the feature then click “Preview features” to see the result on the right-hand side. Also have a look at the <a href="/admin/markdown.php">available markup</a>.</p>
-
-            <input type="hidden" name="next_feature" id="next_feature" value="" />
+            <p class="explain">Write the feature then click “Preview features” to see the result on the right-hand side.
+            Also have a look at the <a target="ysh_markup" href="/admin/markup">available markup</a>.</p>
 
             {% for feature in features %}
             <p class="dynamic-row">
-                <textarea rows="4" cols="35" name="feature[{{ feature.id }}]">{{ feature.description }}</textarea>
-                <span class="feature" id="preview_{{ feature_id }}">{{ feature.description | markdown }}</span>
-                {% if features | length > 1 %}
-                <a class="remove_link" href="#">remove</a>
-                {% endif %}
+                <textarea rows="4" cols="35" class="{{ flash.error['feature_' ~ feature.id] ? 'error' : '' }}" name="feature[{{ feature.id }}]">{{ feature.description }}</textarea>
+                <span class="feature" id="preview_{{ feature.id }}">{{ feature.description | markdown }}</span>
+                <a class="remove_link" {% if features | length == 1 %}class="hidden"{% endif %} href="#">remove</a>
             </p>
             {% endfor %}
-            <p><a id="feature_link" href="#">add</a></p>
+            <p><a id="add_feature" href="#">add</a></p>
 
             <input disabled="disabled" id="preview" type="button" value="Preview features" />
         </fieldset>

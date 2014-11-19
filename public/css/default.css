@@ -313,7 +313,7 @@ fieldset br {
     clear: left;
 }
 
-fieldset #set_rented, fieldset #set_available {
+fieldset #confirm_rented, fieldset #set_available {
     width: 230px;
     font-weight: bold;
 }
@@ -322,12 +322,12 @@ fieldset #set_available {
     float: none;
 }
 
-fieldset #yes, fieldset #no {
+fieldset #set_rented, fieldset #cancel_rented {
     width: 40px;
     float: none;
 }
 
-fieldset #yes {
+fieldset #set_rented {
     margin-right: 5px;
     font-weight: bold;
 }
@@ -338,12 +338,16 @@ fieldset .explain {
     margin-bottom: 20px;
 }
 
+fieldset .for_price {
+    width: 10px;
+}
+
 fieldset .bill_price {
     width: 75px;
     margin-right: 10px;
 }
 
-fieldset .bill_desc {
+fieldset .for_desc {
     width: 90px;
     color: #666;
 }
@@ -412,20 +416,6 @@ div.error, div.success, div.info {
 
 a.remove_link {
     margin-left: 10px;
-}
-
-label.forprice {
-    width: 10px;
-}
-
-.bill_price {
-    width: 75px;
-    margin-right: 10px;
-}
-
-.bill_desc {
-    width: 90px;
-    color: #666;
 }
 
 address {
@@ -549,4 +539,8 @@ td {
     content: "";
     display: table;
     clear: both;
+}
+
+.hidden {
+    display: none;
 }

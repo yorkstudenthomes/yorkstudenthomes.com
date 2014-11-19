@@ -11,47 +11,45 @@ function images($home) {
     }, glob(__DIR__ . "/images/$home/*_thumb.jpg"));
 }
 
-function renderHome($app, $template) {
-    return function ($slug) use ($app, $template) {
-        // description / features
-        $stmt = $app->db->prepare('select house_id, house_address as address, rented, type, description, feature_id, feature from description inner join feature using (house_id) where slug = ? order by feature_id');
-        $stmt->execute(array($slug));
-        $features = $stmt->fetchAll();
+function getHomeData($slug, $app) {
+    // description / features
+    $stmt = $app->db->prepare('select house_id, house_address as address, rented, type, description, feature_id, feature from description inner join feature using (house_id) where slug = ? order by feature_id');
+    $stmt->execute(array($slug));
+    $features = $stmt->fetchAll();
 
-        if (!count($features)) {
-            $app->notFound();
-        }
+    if (!count($features)) {
+        $app->notFound();
+    }
 
-        $home = $features[0];
+    $home = $features[0];
 
-        // room bills
-        $stmt = $app->db->prepare('select bill_id as id, room_price as value, room_description as description from bill where house_id = ? order by room_price');
-        $stmt->execute(array($home['house_id']));
-        $bills = $stmt->fetchAll();
+    // room bills
+    $stmt = $app->db->prepare('select bill_id as id, room_price as value, room_description as description from bill where house_id = ? order by room_price');
+    $stmt->execute(array($home['house_id']));
+    $bills = $stmt->fetchAll();
 
-        // energy ratings
-        $stmt = $app->db->prepare('select * from epc where house_id = ?');
-        $stmt->execute(array($home['house_id']));
-        $ratings = $stmt->fetch();
+    // energy ratings
+    $stmt = $app->db->prepare('select * from epc where house_id = ?');
+    $stmt->execute(array($home['house_id']));
+    $ratings = $stmt->fetch();
 
-        $app->render($template, array(
-            'title'    => $home['address'],
-            'home'     => $home,
-            'bills'    => $bills,
-            'plans'    => is_file(__DIR__ . "/plans/$slug.pdf"),
-            'features' => array_map(function ($row) {
-                return array(
-                    'id'          => $row['feature_id'],
-                    'description' => $row['feature'],
-                );
-            }, $features),
-            'ratings'  => array(
-                'eer' => array('current' => $ratings['eer_current'], 'potential' => $ratings['eer_potential']),
-                'eir' => array('current' => $ratings['eir_current'], 'potential' => $ratings['eir_potential']),
-            ),
-            'images' => images($slug),
-        ));
-    };
+    return array(
+        'title'    => $home['address'],
+        'home'     => $home,
+        'bills'    => $bills,
+        'plans'    => is_file(__DIR__ . "/plans/$slug.pdf"),
+        'features' => array_map(function ($row) {
+            return array(
+                'id'          => $row['feature_id'],
+                'description' => $row['feature'],
+            );
+        }, $features),
+        'ratings'  => array(
+            'eer' => array('current' => $ratings['eer_current'], 'potential' => $ratings['eer_potential']),
+            'eir' => array('current' => $ratings['eir_current'], 'potential' => $ratings['eir_potential']),
+        ),
+        'images' => images($slug),
+    );
 }
 
 $app = new Starsquare\App(array(
@@ -126,7 +124,9 @@ $app->get('/homes/', function () use ($app) {
 });
 
 $app->group('/homes/:home', function () use ($app) {
-    $app->get('/', renderHome($app, 'home.html'));
+    $app->get('/', function ($slug) use ($app) {
+        $app->render('home.html', getHomeData($slug, $app));
+    });
 
     $app->get('/images/:rating', function ($home, $rating) use ($app) {
         $stmt = $app->db->prepare('select house_address, epc.* from description inner join epc using(house_id) where slug = ?');
@@ -206,7 +206,137 @@ $app->map('/admin', $app->auth, function () use ($app) {
     ));
 })->via('GET', 'POST');
 
-$app->map('/admin/homes/:home', $app->auth, renderHome($app, 'admin/home.html'))->via('GET', 'POST');
+$app->post('/admin/markup', $app->auth, function () use ($app) {
+    $params = $app->request->params();
+    $output = array();
+
+    array_walk_recursive($params, function ($item, $key) use ($app, &$output) {
+        $output["preview_$key"] = trim($app->view->render('admin/markup.html', array('value' => $item)));
+    });
+
+    $app->response->headers->set('Content-Type', 'application/json');
+    echo json_encode($output);
+});
+
+$app->map('/admin/homes/:home', $app->auth, function ($slug) use ($app) {
+    $data = getHomeData($slug, $app);
+
+    if ($app->request->isPost()) {
+        $errors = array();
+        $params = $app->request->params();
+
+        if (empty($params['house_type'])) {
+            $errors['house_type'] = 'The home must have a tag line.';
+        }
+
+        if (empty($params['house_desc'])) {
+            $errors['house_desc'] = 'The home must have a description.';
+        }
+
+        $bills = array();
+        foreach ($params['bill'] as $billId => $bill) {
+            if (!preg_match('/^\d+(?:-\d+)?$/', $bill['price'])) {
+                $errors["bill_$billId"] = 'Price "' . $bill['price'] . '" is in the wrong format.';
+            }
+
+            // match structure for template
+            $bills[] = array(
+                'id'          => $billId,
+                'value'       => $bill['price'],
+                'description' => $bill['desc'],
+            );
+        }
+
+        $features = array();
+        foreach ($params['feature'] as $featureId => $feature) {
+            if (trim($feature) == '') {
+                $errors["feature_$featureId"] = 'Feature must not be empty.';
+            }
+
+            $features[] = array(
+                'id'          => $featureId,
+                'description' => $feature,
+            );
+        }
+
+        foreach ($params['epc'] as $rating => $value) {
+            $int = intval($value);
+
+            if ($int <= 0 || $int > 100) {
+                $errors["epc_$rating"] = 'EPC value "' . $value . '" is not a percentage.';
+            }
+        }
+
+        if (count($errors)) {
+            $app->flashNow('error', $errors);
+        }
+        else {
+            // check rented change
+            $rented = $data['home']['rented'];
+            if (isset($params['set_available'])) { $rented = false; }
+            if (isset($params['set_rented'])) { $rented = true; }
+
+            $homeId = $data['home']['house_id'];
+
+            // update home details
+            $stmt = $app->db->prepare('update description set type = ?, description = ?, rented = ? where house_id = ?');
+            $stmt->execute(array(
+                trim($params['house_type']),
+                trim($params['house_desc']),
+                $rented,
+                $homeId,
+            ));
+
+            // update bills
+            $stmt = $app->db->prepare('delete from bill where house_id = ?');
+            $stmt->execute(array($homeId));
+
+            $stmt = $app->db->prepare('insert into bill (house_id, room_price, room_description) values (?, ?, ?)');
+            foreach ($bills as $bill) {
+                $stmt->execute(array(
+                    $homeId,
+                    intval($bill['value']),
+                    trim($bill['description']),
+                ));
+            }
+
+            // update features
+            $stmt = $app->db->prepare('delete from feature where house_id = ?');
+            $stmt->execute(array($homeId));
+
+            $stmt = $app->db->prepare('insert into feature (house_id, feature) values (?, ?)');
+            foreach ($features as $feature) {
+                $stmt->execute(array($homeId, trim($feature['description'])));
+            }
+
+            // update EPC
+            $stmt = $app->db->prepare('update epc set eer_current = ?, eer_potential = ?, eir_current = ?, eir_potential = ? where house_id = ?');
+            $stmt->execute(array(
+                intval($params['epc']['ec']),
+                intval($params['epc']['ep']),
+                intval($params['epc']['ic']),
+                intval($params['epc']['ip']),
+                $homeId,
+            ));
+
+            $app->flashNow('success', 'The details have been updated.');
+        }
+
+        // replace template data from POST
+        $data['home']['type'] = $params['house_type'];
+        $data['home']['description'] = $params['house_desc'];
+        $data['home']['rented'] = $rented;
+        $data['bills'] = $bills;
+        $data['features'] = $features;
+        $data['ratings'] = array(
+            'eer' => array('current' => $params['epc']['ec'], 'potential' => $params['epc']['ep']),
+            'eir' => array('current' => $params['epc']['ic'], 'potential' => $params['epc']['ip']),
+        );
+
+    }
+
+    $app->render('admin/home.html', $data);
+})->via('GET', 'POST');
 
 $app->map('/admin/login', function () use ($app) {
     if ($app->login()) {
