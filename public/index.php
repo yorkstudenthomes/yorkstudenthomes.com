@@ -64,6 +64,8 @@ $app = new Starsquare\App(array(
     'site' => array(
         'name' => 'York Student Homes',
         'tagline' => 'A great place to find a great place to live!',
+        'description' => 'providing 4–6-bedroom houses to students in York for over 20 years.',
+        'keywords' => 'york student homes, york student houses, accommodation, living, renting, homes, houses, properties, aparments, living, students, york',
     ),
     'messages' => array(
         'INVALID_PASSWORD' => 'The password was incorrect.',
