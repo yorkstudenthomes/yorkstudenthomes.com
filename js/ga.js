@@ -22,7 +22,7 @@ function callGA() {
 function loadGA() {
     var s1 = document.createElement('script');
     s1.setAttribute('id', 'googleanalytics');
-    s1.setAttribute('src', 'http://www.google-analytics.com/ga.js');
+    s1.setAttribute('src', '//www.google-analytics.com/ga.js');
     s1.setAttribute('type', 'text/javascript');
 
 	addEvent(s1, 'readystatechange', function () {
