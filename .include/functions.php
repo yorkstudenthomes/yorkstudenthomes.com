@@ -190,4 +190,25 @@
         return (isset($content[$key]) ? $content[$key] : null);
     }
 
+    function is_secure() {
+        // Heroku
+        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+            return true;
+        }
+
+        // Elsewhere
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+            return true;
+        }
+
+        return false;
+    }
+
+    function force_secure() {
+        if (!is_secure()) {
+            header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+            exit;
+        }
+    }
+
 ?>

@@ -8,6 +8,8 @@
 
     include_once('functions.php');
 
+    force_secure();
+
     $date_start = 2008;
 
     define('TABLE_PREFIX',  '');
