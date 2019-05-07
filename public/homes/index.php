@@ -1,6 +1,6 @@
 <?php
 	$title = 'Homes';
-	require('../.include/header.php');
+	require('../../lib/header.php');
 ?>
 				<h2>Homes</h2>
 
@@ -14,5 +14,5 @@
 					<li><a href="/homes/88-queen-victoria-st/">88 Queen Victoria St</a></li>
 				</ul>
 <?php
-	require('../.include/footer.php');
+	require('../../lib/footer.php');
 ?>

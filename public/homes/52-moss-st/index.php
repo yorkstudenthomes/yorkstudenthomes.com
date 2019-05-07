@@ -1,8 +1,8 @@
 <?php
-	require('../../.include/home.php');
+	require('../../../lib/home.php');
 
 	/*$title = '52 Moss Street';
-	require('../../.include/header.php');
+	require('../../../lib/header.php');
 ? >
 
 			<h2>52 Moss Street</h2>
@@ -14,5 +14,5 @@
 				<p>This house is unavailable for the <?php echo $academic_year_range; ? > academic year as it is being refurbished. Please have a look at some of our other houses!</p>
 			</div>
 <?php
-	require('../../.include/footer.php');*/
+	require('../../../lib/footer.php');*/
 ?>

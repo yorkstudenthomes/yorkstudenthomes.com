@@ -1,6 +1,6 @@
 <?php
 	$title = 'Accommodation for Students';
-	require('../.include/header.php');
+	require('../../lib/header.php');
 ?>
 				<h2>Accommodation for Students</h2>
 
@@ -57,5 +57,5 @@
 				</div>
 				<!-- ** End of _better_ Accommodation for Students Banner Ad ** -->
 <?php
-	require('../.include/footer.php');
+	require('../../lib/footer.php');
 ?>

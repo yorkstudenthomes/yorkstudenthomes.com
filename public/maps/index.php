@@ -1,6 +1,6 @@
 <?php
 	$title = 'Maps';
-	require('../.include/header.php');
+	require('../../lib/header.php');
 ?>
 				<h2>Location Maps</h2>
 
@@ -16,5 +16,5 @@
 
 				<p><a href="http://maps.google.co.uk/maps/ms?f=q&amp;hl=en&amp;ie=UTF8&amp;msa=0&amp;msid=116566238079314889929.000442d0bdaad34e81b2f&amp;ll=53.956843,-1.075373&amp;spn=0.032776,0.080338&amp;z=14&amp;om=1">View all locations on one map</a></p>
 <?php
-	require('../.include/footer.php');
+	require('../../lib/footer.php');
 ?>

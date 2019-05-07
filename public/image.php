@@ -1,5 +1,5 @@
 <?php
-    require('.include/header.php');
+    require('../lib/header.php');
 
     if (strpos($_SERVER['PATH_INFO'], 'epc.php') !== false || is_file($_SERVER['DOCUMENT_ROOT'] . '/images' . $_SERVER['PATH_INFO'])) {
 
@@ -19,7 +19,7 @@
         $title = (strpos($_SERVER['PATH_INFO'], 'epc.php') !== false ? 'EPC Graph' : 'Image from ' . house_name(substr(dirname($_SERVER['PATH_INFO']), 1)));
         echo "\n\t\t\t<div id=\"img\">\n\t\t\t\t<h2>$title</h2>\n\t\t\t\t<img src=\"/images" . $_SERVER['PATH_INFO'] . "\" alt=\"house image\" />\n\t\t\t</div>\n";
 
-        require('.include/footer.php');
+        require('../lib/footer.php');
     } else {
         header("Location: /");
     }

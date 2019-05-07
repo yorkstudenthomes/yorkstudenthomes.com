@@ -1,6 +1,6 @@
 <?php
     error_reporting(E_ALL ^ E_NOTICE); // for debugging
-    require '../.include/functions.php';
+    require '../../lib/functions.php';
 
     session_name('sid');
     session_start();
@@ -28,7 +28,7 @@
 
     $title = 'Admin';
 
-    require('../.include/header.php');
+    require('../../lib/header.php');
 ?>
             <h2>Homes Administration</h2>
 <?php
@@ -262,5 +262,5 @@
 <?php
     }
 
-    require('../.include/footer.php');
+    require('../../lib/footer.php');
 ?>

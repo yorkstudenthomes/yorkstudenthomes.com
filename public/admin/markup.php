@@ -1,6 +1,6 @@
 <?php
 	if (count($_POST) > 0) {
-		include('../.include/functions.php');
+		include('../../lib/functions.php');
 
 		$ret = array();
 
@@ -10,7 +10,7 @@
 
 		echo "{\n" . implode(",\n", $ret) . "\n}\n";
 	} else {
-		include('../.include/header.php');
+		include('../../lib/header.php');
 
 		session_name('sid');
 		session_start();
@@ -48,6 +48,6 @@
 
 		echo "\t\t\t</table>\n";
 
-		include('../.include/footer.php');
+		include('../../lib/footer.php');
 	}
 ?>

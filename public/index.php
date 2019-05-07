@@ -1,5 +1,5 @@
 <?php
-    require('.include/header.php');
+    require('../lib/header.php');
 
     if (!$db = db_connect()) {
         echo "\t\t\t\t<div class=\"error\">\n\t\t\t\t\t<h2>Sorry!</h2>\n\t\t\t\t\t<p>There seems to have been a problem with the site. We&rsquo;re looking into it and it should be fixed soon.</p>\n\t\t\t\t</div>\n\n";
@@ -25,5 +25,5 @@
 
                 <p>We are now listed on <a href="/accommodation-for-students/">Accommodation for Students</a>, the number 1 student accommodation search engine.</p>
 <?php
-    require('.include/footer.php');
+    require('../lib/footer.php');
 ?>

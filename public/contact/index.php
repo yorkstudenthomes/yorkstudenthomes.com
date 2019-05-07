@@ -1,6 +1,6 @@
 <?php
 	$title = 'Contact Us';
-	require('../.include/header.php');
+	require('../../lib/header.php');
 ?>
 				<h2>Contact us</h2>
 
@@ -26,5 +26,5 @@
 					<dd><a href="mailto:michael@yorkstudenthomes.com">michael@yorkstudenthomes.com</a></dd>
 				</dl>
 <?php
-	require('../.include/footer.php');
+	require('../../lib/footer.php');
 ?>
