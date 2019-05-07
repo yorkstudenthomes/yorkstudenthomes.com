@@ -1,7 +1,7 @@
 <?php
     require('../lib/header.php');
 
-    if (strpos($_SERVER['PATH_INFO'], 'epc.php') !== false || is_file($_SERVER['DOCUMENT_ROOT'] . '/images' . $_SERVER['PATH_INFO'])) {
+    if (strpos($_SERVER['PATH_INFO'], 'epc') !== false || is_file($_SERVER['DOCUMENT_ROOT'] . '/images' . $_SERVER['PATH_INFO'])) {
 
         $images = array_values(array_filter(image_list(dirname($_SERVER['DOCUMENT_ROOT'] . '/images/' . $_SERVER['PATH_INFO']) . '/'), 'thumbnail_filter'));
         $key = array_search(basename($_SERVER['PATH_INFO']), $images);
@@ -16,8 +16,8 @@
             }
         }
 
-        $title = (strpos($_SERVER['PATH_INFO'], 'epc.php') !== false ? 'EPC Graph' : 'Image from ' . house_name(substr(dirname($_SERVER['PATH_INFO']), 1)));
-        echo "\n\t\t\t<div id=\"img\">\n\t\t\t\t<h2>$title</h2>\n\t\t\t\t<img src=\"/images" . $_SERVER['PATH_INFO'] . "\" alt=\"house image\" />\n\t\t\t</div>\n";
+        $title = (strpos($_SERVER['PATH_INFO'], 'epc') !== false ? 'EPC Graph' : 'Image from ' . house_name(substr(dirname($_SERVER['PATH_INFO']), 1)));
+        echo "\n\t\t\t<div id=\"img\">\n\t\t\t\t<h2>$title</h2>\n\t\t\t\t<img src=\"/images" . str_replace('epc', 'epc.php', $_SERVER['PATH_INFO']) . "\" alt=\"house image\" />\n\t\t\t</div>\n";
 
         require('../lib/footer.php');
     } else {

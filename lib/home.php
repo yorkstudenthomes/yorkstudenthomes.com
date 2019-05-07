@@ -65,7 +65,7 @@
 
 	foreach (array('e', 'i') as $type) {
 		if ($epc["e{$type}r_current"] > 0 && $epc["e{$type}r_potential"] > 0) {
-			echo "\t\t\t\t<a href=\"/image.php/epc.php/e{$type}/" , $epc["e{$type}r_current"] , '/' , $epc["e{$type}r_potential"] , "\"><img src=\"/images/epc.php/e{$type}/" , $epc["e{$type}r_current"] , '/' , $epc["e{$type}r_potential"] , "/thumb\" alt=\"E" . strtoupper($type) . "R Graph of " . house_name($house_path) . "\" /></a>\n";
+			echo "\t\t\t\t<a href=\"/image.php/epc/e{$type}/" , $epc["e{$type}r_current"] , '/' , $epc["e{$type}r_potential"] , "\"><img src=\"/images/epc.php/e{$type}/" , $epc["e{$type}r_current"] , '/' , $epc["e{$type}r_potential"] , "/thumb\" alt=\"E" . strtoupper($type) . "R Graph of " . house_name($house_path) . "\" /></a>\n";
 		}
 	}
 
