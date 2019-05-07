@@ -1,8 +1,8 @@
 <?php
     error_reporting(E_ALL);
-    include '../jpgraph/src/jpgraph.php';
-    include '../jpgraph/src/jpgraph_canvas.php';
-    include '../jpgraph/src/jpgraph_canvtools.php';
+    include '../../jpgraph/src/jpgraph.php';
+    include '../../jpgraph/src/jpgraph_canvas.php';
+    include '../../jpgraph/src/jpgraph_canvtools.php';
 
     $colours = array(
         'ee' => array('#ff0000', '#ff6600', '#ff9c34', '#fecb34', '#99cc67', '#339967', '#669835'),
