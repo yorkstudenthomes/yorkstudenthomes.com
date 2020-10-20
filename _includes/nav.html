@@ -1,9 +1,13 @@
         <div id="nav">
             <div id="navright">
                 <ul>
-                    {% for home in site.homes %}
+                    {%- for home in site.homes %}
                     <li{% if home.url == page.url %} id="selected"{% endif %}><a href="{{ home.url }}"><b>{{ home.name }}</b></a></li>
-                    {% endfor %}
+                    {%- endfor %}
+
+                    {%- for link in site.data.navigation %}
+                    <li{% if link.url == page.url %} id="selected"{% endif %}><a href="{{ link.url }}"><b>{{ link.text }}</b></a></li>
+                    {%- endfor %}
                 </ul>
             </div>
         </div>

@@ -5,6 +5,7 @@ host: 0.0.0.0
 url: https://yorkstudenthomes.com
 baseurl: ""
 repository: yorkstudenthomes/yorkstudenthomes.com
+permalink: /:title/
 
 timezone: Europe/London
 locale: en-GB
