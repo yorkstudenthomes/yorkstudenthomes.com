@@ -1,6 +1,7 @@
 ---
 name: 22 Kyme St
 rented: true
+postcode: YO1 6HG
 tag: Fully Modernised 4-Bedroom End-Terraced House
 description: >
     Located inside the City Walls, this is really close to the town centre,
