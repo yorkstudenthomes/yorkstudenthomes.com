@@ -23,6 +23,21 @@ plugins:
 sass:
   style: compressed
 
+defaults:
+  - scope:
+      type: pages
+    values:
+      og_type: website
+  - scope:
+      type: homes
+    values:
+      layout: home
+
+collections:
+  homes:
+    output: true
+    permalink: /homes/:name/
+
 meta:
   description: York Student Homes - providing 4–6-bedroom houses to students in York for over 20 years.
   keywords:
@@ -38,3 +53,7 @@ meta:
     - living
     - students
     - york
+
+epc:
+  eer: Energy Efficiency Rating
+  eir: Environmental (CO₂) Impact Rating

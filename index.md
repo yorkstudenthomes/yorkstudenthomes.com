@@ -2,6 +2,14 @@
 layout: default
 ---
 
+{%- assign available = site.homes | where: 'rented', false | size -%}
+{%- if available == 0 -%}
+<div class="info">
+    <h2>All houses unavailable</h2>
+    <p>All of our houses have been taken for this year.</p>
+</div>
+{%- endif %}
+
 ## York Student Homes --- {{ site.data.config.year }}–{{ site.data.config.year | plus: 1 }} academic year
 
 If you are looking for a house to live in, with your friends, while you are studying at York University or York St John in York then you've just found a great place to find one!
