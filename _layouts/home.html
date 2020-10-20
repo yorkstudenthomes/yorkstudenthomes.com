@@ -27,6 +27,12 @@ layout: default
     {%- assign email = site.url | replace: 'https://','@' | prepend: page.slug %}
     <p id="email">Email for details about this house: <a href="mailto: {{ email }}">{{ email }}</a></p>
   {%- endunless %}
+
+  {%- assign plans = '/plans/' | append: page.slug | append: '.pdf' -%}
+  {%- assign plans_exist = site.static_files | where_exp: 'f', 'f.path == plans' | size -%}
+  {%- if plans_exist > 0 %}
+    <p><a rel="external" href="{{ plans }}">View {{ page.name }} plans</a></p>
+  {%- endif %}
 </div>
 
 <div id="right">
