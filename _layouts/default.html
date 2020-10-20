@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta http-equiv="content-language" content="en" />
+        <meta name="description" content="{{ page.description | default: site.meta.description }}" />
+        <meta name="keywords" content="{{ site.meta.keywords | join: ', ' }}" />
+        <meta name="copyright" content="{{ site.title }} 2008–{{ site.time | date: '%Y' }}. All rights reserved." />
+        <title>{{ page.title }}{% if page.title %} - {% endif %}{{ site.title }}</title>
+        <script type="text/javascript" src="/js/ga.js"></script>
+        <link rel="stylesheet" href="/css/default.css" />
+    </head>
+    <body>
+        <div id="header">
+        <h1><a href="/">{{ site.title }}</a></h1>
+        <p>{{ site.description }}</p>
+        </div>
+
+{% include nav.html %}
+
+        <hr />
+
+        <div id="banner">
+            <div id="bannerright">
+                <div id="bannerimg">&nbsp;</div>
+            </div>
+        </div>
+
+        <div id="main">
+            {{ content }}
+        </div>
+
+        <hr />
+
+        <div id="footer">
+            <p id="copyright">Copyright &copy; {{ site.title }} 2008&ndash;{{ site.time | date: '%Y' }}. All rights reserved.
+            <a id="admin-link" href="/admin/">Admin panel</a>
+            <a id="afs-link" href="/accommodation-for-students/">Accommodation for Students</a>
+            </p>
+            <p id="siteby">Site by <a href="https://starsquare.co.uk">StarSquare Designs</a>.</p>
+        </div>
+    </body>
+</html>

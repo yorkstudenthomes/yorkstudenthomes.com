@@ -1,0 +1,9 @@
+        <div id="nav">
+            <div id="navright">
+                <ul>
+                    {% for home in site.homes %}
+                    <li{% if home.url == page.url %} id="selected"{% endif %}><a href="{{ home.url }}"><b>{{ home.name }}</b></a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>

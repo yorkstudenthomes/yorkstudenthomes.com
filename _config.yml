@@ -1,0 +1,40 @@
+title: York Student Homes
+description: A great place to find a great place to live!
+host: 0.0.0.0
+
+url: https://yorkstudenthomes.com
+baseurl: ""
+repository: yorkstudenthomes/yorkstudenthomes.com
+
+timezone: Europe/London
+locale: en-GB
+
+markdown: kramdown
+
+exclude:
+  - CNAME
+  - Gemfile
+  - Gemfile.lock
+  - TODO
+
+plugins:
+  - jekyll-redirect-from
+
+sass:
+  style: compressed
+
+meta:
+  description: York Student Homes - providing 4–6-bedroom houses to students in York for over 20 years.
+  keywords:
+    - york student homes
+    - york student houses
+    - accommodation
+    - living
+    - renting
+    - homes
+    - houses
+    - properties
+    - aparments
+    - living
+    - students
+    - york
