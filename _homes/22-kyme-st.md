@@ -1,11 +1,12 @@
 ---
-name: 22 Kyme St
+name: 22 Kyme Street
 rented: true
+position: 1
 postcode: YO1 6HG
 tag: Fully Modernised 4-Bedroom End-Terraced House
-description: >
-    Located inside the City Walls, this is really close to the town centre,
-    train station and Micklegate; with nearby frequent Number 4 bus route direct to the University.
+description: Located inside the City Walls, this is really close to the town centre,
+  train station and Micklegate; with nearby frequent Number 4 bus route direct to
+  the University.
 epc:
   current:
     eer: 71
@@ -14,12 +15,12 @@ epc:
     eer: 76
     eir: 73
 bills:
-  - amount: 75
-    description: Double Bedrooms
-  - amount: 85
-    description: Double with en-suite
-  - amount: 65
-    description: Small Double Bedroom
+- amount: 75
+  description: Double Bedrooms
+- amount: 85
+  description: Double with en-suite
+- amount: 65
+  description: Small Double Bedroom
 ---
 
 * Fully renovated

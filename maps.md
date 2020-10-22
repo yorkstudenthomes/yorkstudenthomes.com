@@ -2,8 +2,11 @@
 title: Maps
 ---
 
+## Location Maps
+
 <ul>
-  {%- for home in site.homes %}
+  {%- assign sorted_homes = site.homes | sort: 'position' -%}
+  {%- for home in sorted_homes %}
     <li><a href="https://www.google.co.uk/maps/place/{{ home.name | append: ', York ' | append: home.postcode | replace: ' ','+' }}">{{ home.name }}</a></li>
   {%- endfor %}
 </ul>

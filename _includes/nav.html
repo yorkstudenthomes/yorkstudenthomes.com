@@ -1,8 +1,9 @@
         <div id="nav">
             <div id="navright">
                 <ul>
-                    {%- for home in site.homes %}
-                    <li{% if home.url == page.url %} id="selected"{% endif %}><a href="{{ home.url }}"><b>{{ home.name }}</b></a></li>
+                    {%- assign sorted_homes = site.homes | sort: 'position' -%}
+                    {%- for home in sorted_homes %}
+                    <li{% if home.url == page.url %} id="selected"{% endif %}><a href="{{ home.url }}"><b>{{ home.name | replace: 'Street','St' }}</b></a></li>
                     {%- endfor %}
 
                     {%- for link in site.data.navigation %}

@@ -31,7 +31,7 @@ layout: default
   {%- assign plans = '/plans/' | append: page.slug | append: '.pdf' -%}
   {%- assign plans_exist = site.static_files | where_exp: 'f', 'f.path == plans' | size -%}
   {%- if plans_exist > 0 %}
-    <p><a rel="external" href="{{ plans }}">View {{ page.name }} plans</a></p>
+    <p><a rel="external" href="{{ plans }}">View {{ page.name }} plans</a> (PDF)</p>
   {%- endif %}
 </div>
 

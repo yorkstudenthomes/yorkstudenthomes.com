@@ -1,7 +1,7 @@
 ---
 title: Contact Us
 ---
-## Contact us
+## Contact Us
 
 All correspondence should be sent to the following address:
 
