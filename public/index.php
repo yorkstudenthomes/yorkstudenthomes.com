@@ -6,7 +6,7 @@
     } else {
         $result = $db->query("SELECT COUNT(`rented`) AS `numAvailable` FROM " . TABLE_DESC . " WHERE `rented` = 0");
 
-        if (!$result->fetch_object()->numAvailable) {
+        if ($result && !$result->fetch_object()->numAvailable) {
             echo "\t\t\t\t<div class=\"info\">\n\t\t\t\t\t<h2>All houses unavailable</h2>\n\t\t\t\t\t<p>All of our houses have been taken for this year.</p>\n\t\t\t\t</div>\n\n";
         }
     }

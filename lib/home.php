@@ -8,7 +8,7 @@
 	$results = $db->query("SELECT " . TABLE_DESC . ".`house_id`, `rented`, `type`, `description`, `feature` FROM " . TABLE_DESC . " INNER JOIN " . TABLE_FEATURE . " USING(`house_id`) WHERE `house_address` = '$house_address' ORDER BY `feature_id`");
 
 	$features = array();
-	while ($row = $results->fetch_assoc()) {
+	while ($results && $row = $results->fetch_assoc()) {
 		$house = array('id' => $row['house_id'], 'type' => $row['type'], 'description' => $row['description'], 'is_rented' => $row['rented']);
 		$features[] = $row['feature'];
 	}
@@ -16,7 +16,7 @@
 	$bill_results = $db->query("SELECT `room_price`, `room_description` FROM " . TABLE_BILL . " WHERE `house_id` = {$house['id']} ORDER BY `room_price` ASC");
 
 	$bills = array();
-	while ($row = $bill_results->fetch_assoc()) {
+	while ($bill_results && $row = $bill_results->fetch_assoc()) {
 		if (empty($row['room_description'])) {
 			$bills[] = str_replace('-', '&ndash;', $row['room_price']);
 		} else {
@@ -25,7 +25,7 @@
 	}
 
 	$epc_results = $db->query("SELECT `eer_current`, `eer_potential`, `eir_current`, `eir_potential` FROM " . TABLE_EPC . " WHERE `house_id` = {$house['id']}");
-	$epc = $epc_results->fetch_assoc();
+	$epc = $epc_results ? $epc_results->fetch_assoc() : array();
 
 	require('header.php');
 

@@ -102,12 +102,12 @@
             $tables = array();
 
             $results = $db->query("SHOW TABLE STATUS LIKE '%'");
-            while ($row = $results->fetch_assoc()) {
+            while ($results && $row = $results->fetch_assoc()) {
                 $tables[$row['Name']] = $row;
             }
 
             $house_results = $db->query("SELECT `house_address`, `rented`, `type`, `description` FROM " . TABLE_DESC . " WHERE `house_id` = $house_id");
-            $house = $house_results->fetch_assoc();
+            $house = $house_results ? $house_results->fetch_assoc() : array();
             echo "\t\t\t<h3>" . $house['house_address'] . "</h3>\n";
             $is_rented = $house['rented'];
             $house_type = $house['type'];
@@ -117,18 +117,20 @@
                 $bills = $features = array();
 
                 $bill_results = $db->query("SELECT `bill_id`, `room_price`, `room_description` FROM " . TABLE_BILL . " WHERE `house_id` = $house_id");
-                while ($row = $bill_results->fetch_assoc()) {
+                while ($bill_results && $row = $bill_results->fetch_assoc()) {
                     $bills[$row['bill_id']] = array('price' => $row['room_price'], 'desc' => $row['room_description']);
                 }
 
                 $feature_results = $db->query("SELECT `feature_id`, `feature` FROM " . TABLE_FEATURE . " WHERE `house_id` = $house_id ORDER BY `feature_id`");
-                while ($row = $feature_results->fetch_assoc()) {
+                while ($feature_results && $row = $feature_results->fetch_assoc()) {
                     $features[$row['feature_id']] = $row['feature'];
                 }
 
                 $epc_results = $db->query("SELECT `eer_current`, `eer_potential`, `eir_current`, `eir_potential` FROM " . TABLE_EPC . " WHERE `house_id` = $house_id");
-                foreach ($epc_results->fetch_assoc() as $field_name => $field) {
-                    $epc[$field_name[1] . $field_name[4]] = $field;
+                if ($epc_results) {
+                    foreach ($epc_results->fetch_assoc() as $field_name => $field) {
+                        $epc[$field_name[1] . $field_name[4]] = $field;
+                    }
                 }
             }
 
@@ -238,7 +240,7 @@
             echo "<ul>\n";
 
             $results = $db->query("SELECT `house_id`, `house_address` FROM " . TABLE_DESC);
-            while ($row = $results->fetch_assoc()) {
+            while ($results && $row = $results->fetch_assoc()) {
                 echo "<li><a href=\"/admin/?house_id=" . $row['house_id'] . '">' . $row['house_address'] . "</a></li>\n";
             }
             echo "</ul>\n<p><a href=\"http://mail.yorkstudenthomes.com/\">Go to Mailbox</a><br /><a href=\"http://calendar.yorkstudenthomes.com/\">Go to Calendar</a></p>\n";

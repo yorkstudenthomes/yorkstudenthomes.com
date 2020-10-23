@@ -49,7 +49,7 @@
         // Doesn't yet handle ../ or ./
         if ($str == '' || $str == null) { return false; }
         if (substr($str, 0, 7) == 'http://' || substr($str, 0, 8) == 'https://' || substr($str, 0, 6) == 'ftp://') { return $str; }
-        if ($str{0} != '/') { $str = dirname($_SERVER['SCRIPT_NAME']) . '/' . $str; }
+        if ($str[0] != '/') { $str = dirname($_SERVER['SCRIPT_NAME']) . '/' . $str; }
         if (strpos($str, $_SERVER['HTTP_HOST']) === false) { $str = $_SERVER['HTTP_HOST'] . $str; }
         if (strpos($str, '://') === false) { $str = 'http://' . $str; }
         return $str;
@@ -172,7 +172,7 @@
         if ($db = db_connect()) {
             $result = $db->query('SELECT value FROM ' . TABLE_SETTING . ' WHERE `setting` = "' . $db->real_escape_string($key) . '"');
 
-            if ($row = $result->fetch_assoc()) {
+            if ($result && $row = $result->fetch_assoc()) {
                 return $row['value'];
             }
         }
