@@ -72,7 +72,7 @@ function addBill() {
     removeLink.setAttribute('href', '#');
     removeLink.setAttribute('class', 'remove_link');
     removeLink.className = 'remove_link';
-    addEvent(removeLink, 'click', function (ev) {
+    removeLink.addEventListener('click', function (ev) {
         if (ev.preventDefault) { ev.preventDefault(); } else { ev.returnValue = false; }
         removeRow(removeLink);
     });
@@ -110,7 +110,7 @@ function addFeature() {
     removeLink.setAttribute('href', '#');
     removeLink.setAttribute('class', 'remove_link');
     removeLink.className = 'remove_link';
-    addEvent(removeLink, 'click', function (ev) {
+    removeLink.addEventListener('click', function (ev) {
         if (ev.preventDefault) { ev.preventDefault(); } else { ev.returnValue = false; }
         removeRow(removeLink);
     });
@@ -190,7 +190,7 @@ function showSetPropertyAsRentedConfim() {
     confirmYes.setAttribute('type', 'submit');
     confirmYes.setAttribute('value', 'Yes');
     confirmYes.setAttribute('id', 'yes');
-    addEvent(confirmYes, 'click', function (ev) {
+    confirmYes.addEventListener('click', function (ev) {
         document.getElementById('is_rented').value = 1;
     });
     confirm.appendChild(confirmYes);
@@ -199,7 +199,7 @@ function showSetPropertyAsRentedConfim() {
     confirmNo.setAttribute('type', 'button');
     confirmNo.setAttribute('value', 'No');
     confirmNo.setAttribute('id', 'no');
-    addEvent(confirmNo, 'click', function (ev) {
+    confirmNo.addEventListener('click', function (ev) {
         var setRented = document.getElementById('set_rented');
         var confirm = document.getElementById('rented');
         confirm.setAttribute('class', '');
@@ -216,48 +216,48 @@ function showSetPropertyAsRentedConfim() {
 function initialise() {
     var textboxes = document.getElementsByTagName('textarea');
     for (var i = 0; i < textboxes.length; i++) {
-        addEvent(textboxes[i], 'keydown', function () {
+        textboxes[i].addEventListener('keydown', function () {
             flipPreviewSaveButtons(true);
         });
     }
 
     if (document.getElementById('details')) {
-        addEvent(document.getElementById('details'), 'reset', function (ev) {
+        document.getElementById('details').addEventListener('reset', function (ev) {
             flipPreviewSaveButtons(true);
         });
     }
 
     if (document.getElementById('set_rented')) {
-        addEvent(document.getElementById('set_rented'), 'click', function (ev) {
+        document.getElementById('set_rented').addEventListener('click', function (ev) {
             showSetPropertyAsRentedConfim();
         });
     }
 
     if (document.getElementById('set_available')) {
-        addEvent(document.getElementById('set_available'), 'click', function (ev) {
+        document.getElementById('set_available').addEventListener('click', function (ev) {
             document.getElementById('is_rented').value = 0;
         });
     }
 
     if (document.getElementById('bill_link')) {
-        addEvent(document.getElementById('bill_link'), 'click', function (ev) {
+        document.getElementById('bill_link').addEventListener('click', function (ev) {
             if (ev.preventDefault) { ev.preventDefault(); } else { ev.returnValue = false; }
             addBill();
         });
     }
 
     if (document.getElementById('feature_link')) {
-        addEvent(document.getElementById('feature_link'), 'click', function (ev) {
+        document.getElementById('feature_link').addEventListener('click', function (ev) {
             if (ev.preventDefault) { ev.preventDefault(); } else { ev.returnValue = false; }
             addFeature();
         });
     }
 
     if (document.getElementById('preview')) {
-        addEvent(document.getElementById('preview'), 'click', function () {
+        document.getElementById('preview').addEventListener('click', function () {
             previewFeatures();
         });
     }
 }
 
-addEvent(window, 'load', initialise);
+window.addEventListener('load', initialise);
