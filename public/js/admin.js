@@ -92,7 +92,7 @@ function addFeature() {
     var addLink = document.getElementById('feature_link');
     var featureFieldset = addLink.parentNode;
 
-    var featureRow = document.createElement('span');
+    var featureRow = document.createElement('div');
     featureRow.setAttribute('class', 'featurerow');
     featureRow.className = 'featurerow';
 

@@ -212,7 +212,7 @@
 <?php
             $display_remove_link = false;
             foreach ($features as $feature_id => $feature) {
-                echo "<span class=\"featurerow\"><textarea rows=\"4\" cols=\"35\" name=\"feature[$feature_id]\">" , htmlentities($feature) , "</textarea> <span class=\"feature\" id=\"preview_$feature_id\">" , markup($feature) , "</span>" , ($display_remove_link ? "<a class=\"remove_link\" href=\"#\" onclick=\"return removeRow(this)\">remove</a>" : '' ) , "<br /></span>\n";
+                echo "<div class=\"featurerow\"><textarea rows=\"4\" cols=\"35\" name=\"feature[$feature_id]\">" , htmlentities($feature) , "</textarea> <span class=\"feature\" id=\"preview_$feature_id\">" , markup($feature) , "</span>" , ($display_remove_link ? "<a class=\"remove_link\" href=\"#\" onclick=\"return removeRow(this)\">remove</a>" : '' ) , "<br /></div>\n";
                 $display_remove_link = true;
             }
             echo "<p><a id=\"feature_link\" href=\"#\">add</a></p><input disabled=\"disabled\" id=\"preview\" type=\"button\" value=\"Preview features\" /></fieldset><input id=\"save\" type=\"submit\" value=\"Save all data\" /><br /><input id=\"reset_form\" type=\"reset\" value=\"Reset data\" /></fieldset>\n</form>\n";
