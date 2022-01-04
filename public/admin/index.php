@@ -197,7 +197,7 @@
             $display_remove_link = false;
             foreach ($bills as $bill_id => $bill) {
 
-                echo "<span class=\"billrow\"><label class=\"forprice\" for=\"bill_{$bill_id}_price\">&pound;</label><input id=\"bill_{$bill_id}_price\" class=\"bill_price" . (isset($error['bill'][$bill_id]['price']) ? ' error' : '') . "\" type=\"text\" name=\"bill[$bill_id][price]\" value=\"{$bill['price']}\" /> <label class=\"bill_desc\" for=\"bill_{$bill_id}_desc\">Description</label><input id=\"bill_{$bill_id}_desc\" type=\"text\" name=\"bill[$bill_id][desc]\" value=\"{$bill['desc']}\" />" , ($display_remove_link ? "<a class=\"remove_link\" href=\"#\" onclick=\"return removeRow(this)\">remove</a>" : '') , "<br /></span>\n";
+                echo "<div class=\"billrow\"><label class=\"forprice\" for=\"bill_{$bill_id}_price\">&pound;</label><input id=\"bill_{$bill_id}_price\" class=\"bill_price" . (isset($error['bill'][$bill_id]['price']) ? ' error' : '') . "\" type=\"text\" name=\"bill[$bill_id][price]\" value=\"{$bill['price']}\" /> <label class=\"bill_desc\" for=\"bill_{$bill_id}_desc\">Description</label><input id=\"bill_{$bill_id}_desc\" type=\"text\" name=\"bill[$bill_id][desc]\" value=\"{$bill['desc']}\" />" , ($display_remove_link ? "<a class=\"remove_link\" href=\"#\" onclick=\"return removeRow(this)\">remove</a>" : '') , "<br /></div>\n";
                 $display_remove_link = true;
             }
 ?>

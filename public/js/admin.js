@@ -36,7 +36,7 @@ function addBill() {
     var addLink = document.getElementById('bill_link');
     var billFieldset = addLink.parentNode;
 
-    var billRow = document.createElement('span');
+    var billRow = document.createElement('div');
     billRow.setAttribute('class', 'billrow');
     billRow.className = 'billrow';
 
