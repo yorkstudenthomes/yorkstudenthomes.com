@@ -11,24 +11,27 @@ on:
       home-id:
         description: Home ID
 jobs:
-  commit-contents:
+  commit-updates:
+    name: Commit Updates
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.GH_TOKEN }}
-          branch: ${{ github.ref }}
+          ref: jekyll
       - name: Get file name
         id: get-file
         env:
           HOME_ID: ${{ github.event.inputs.home-id }}
         run: |
-          [ -n "$HOME_ID" ] && echo "::set-output name=file::_homes/$HOME_ID.md"
-          [ -z "$HOME_ID" ] && echo "::set-output name=file::_data/config.yml"
+          [ -n "$HOME_ID" ] \
+            && echo "::set-output name=file::_homes/$HOME_ID.md" \
+            || echo "::set-output name=file::_data/config.yml"
       - uses: DamianReeves/write-file-action@v1.0
         with:
           path: ${{ github.workspace }}/${{ steps.get-file.outputs.file }}
           contents: ${{ github.event.inputs.contents }}
+          write-mode: overwrite
       - name: Commit changes
         env:
           USER_NAME: ${{ github.event.inputs.user }}
