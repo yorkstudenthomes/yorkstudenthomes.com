@@ -44,5 +44,9 @@
             </p>
             <p id="siteby">Site by <a href="https://starsquare.co.uk">StarSquare Designs</a>.</p>
         </div>
+        {%- if page.lightbox or layout.lightbox %}
+        <script src="/js/fslightbox-3.3.1.js"></script>
+        <script src="/js/images.js"></script>
+        {%- endif %}
     </body>
 </html>
