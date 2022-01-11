@@ -1,82 +1,78 @@
- - text: Aberdeen
-   url: /aberdeen/
- - text: Bath
-   url: /bath/
- - text: Birmingham
-   url: /birmingham/
- - text: Brighton
-   url: /brighton/
- - text: Bristol
-   url: /bristol/
- - text: Cambridge
-   url: /cambridge/
- - text: Cardiff
-   url: /cardiff/
- - text: Cheltenham
-   url: /cheltenham/
- - text: Chester
-   url: /chester/
- - text: Coventry
-   url: /coventry/
- - text: Crewe
-   url: /crewe/
- - text: Derby
-   url: /derby/
- - text: Dover
-   url: /dover/
- - text: Dundee
-   url: /dundee/
- - text: Durham
-   url: /durham/
- - text: Edinburgh
-   url: /edinburgh/
- - text: Exeter
-   url: /exeter/
- - text: Glasgow
-   url: /glasgow/
- - text: Huddersfield
-   url: /huddersfield/
- - text: Hull
-   url: /hull/
- - text: Leeds
-   url: /leeds/
- - text: Leicester
-   url: /leicester/
- - text: Lincoln
-   url: /lincoln/
- - text: Liverpool
-   url: /liverpool/
- - text: London
-   url: /london/
- - text: Manchester
-   url: /manchester/
- - text: Newcastle
-   url: /newcastle/
- - text: Nottingham
-   url: /nottingham/
- - text: Oxford
-   url: /oxford/
- - text: Reading
-   url: /reading/
- - text: Salford
-   url: /salford/
- - text: Sheffield
-   url: /sheffield/
- - text: St Andrews
-   url: /st-andrews/
- - text: Stafford
-   url: /stafford/
- - text: Southampton
-   url: /southampton/
- - text: ALL OF UK
-   url: /
- - text: noticeboard
-   url: /notices/completelisting.asp
- - text: advertise
-   url: /advertise.asp
- - text: guides
-   url: /info/student_guides.asp
- - text: LPHS
-   url: /largerprivatestudenthousing/completelisting.asp
- - text: Letting Agents
-   url: /letting_agents/letting_agents_UK.asp
+places:
+  - text: Aberdeen
+    url: /aberdeen
+  - text: Bath
+    url: /bath
+  - text: Birmingham
+    url: /birmingham
+  - text: Brighton
+    url: /brighton
+  - text: Bristol
+    url: /bristol
+  - text: Cambridge
+    url: /cambridge
+  - text: Cardiff
+    url: /cardiff
+  - text: Cheltenham
+    url: /cheltenham
+  - text: Chester
+    url: /chester
+  - text: Coventry
+    url: /coventry
+  - text: Crewe
+    url: /crewe
+  - text: Derby
+    url: /derby
+  - text: Dover
+    url: /dover
+  - text: Dundee
+    url: /dundee
+  - text: Durham
+    url: /durham
+  - text: Edinburgh
+    url: /edinburgh
+  - text: Exeter
+    url: /exeter
+  - text: Glasgow
+    url: /glasgow
+  - text: Huddersfield
+    url: /huddersfield
+  - text: Hull
+    url: /hull
+  - text: Leeds
+    url: /leeds
+  - text: Leicester
+    url: /leicester
+  - text: Lincoln
+    url: /lincoln
+  - text: Liverpool
+    url: /liverpool
+  - text: London
+    url: /london
+  - text: Manchester
+    url: /manchester
+  - text: Newcastle
+    url: /newcastle
+  - text: Nottingham
+    url: /nottingham
+  - text: Oxford
+    url: /oxford
+  - text: Reading
+    url: /reading
+  - text: Salford
+    url: /salford
+  - text: Sheffield
+    url: /sheffield
+  - text: St Andrews
+    url: /st-andrews
+  - text: Stafford
+    url: /stafford
+  - text: Southampton
+    url: /southampton
+  - text: ALL OF UK
+    url:
+extras:
+  - text: advertise
+    url: /advertise
+  - text: guides
+    url: /student-guides
