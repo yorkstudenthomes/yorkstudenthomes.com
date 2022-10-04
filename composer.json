@@ -1,6 +1,6 @@
 {
     "require": {
         "php": "^8",
-        "ext-yaml": "*"
+        "symfony/yaml": "^6"
     }
 }

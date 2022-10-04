@@ -1,8 +1,11 @@
 <?php
 
+require 'vendor/autoload.php';
 require 'jpgraph/jpgraph.php';
 require 'jpgraph/jpgraph_canvas.php';
 require 'jpgraph/jpgraph_canvtools.php';
+
+use Symfony\Component\Yaml\Yaml;
 
 class Epc {
     protected $colours = [
@@ -119,7 +122,7 @@ class Epc {
 
 foreach (glob('_homes/*.md') as $file) {
     echo "Creating EPC for $file\n";
-    $data = yaml_parse(file_get_contents($file));
+    $data = Yaml::parse(explode('---', file_get_contents($file))[1]);
 
     if (!$data) {
         exit("$file: coult not load yaml\n");

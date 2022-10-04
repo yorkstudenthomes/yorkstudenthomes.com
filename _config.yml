@@ -17,6 +17,7 @@ exclude:
   - Gemfile.lock
   - netlify.toml
   - TODO
+  - vendor
 
 plugins:
   - jekyll-redirect-from
