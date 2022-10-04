@@ -138,6 +138,7 @@ foreach (glob('_homes/*.md') as $file) {
     foreach ($data as $type => $scores) {
         foreach ([true, false] as $thumb) {
             if ($scores['current'] > 0 && $scores['potential'] > 0) {
+                printf("Creating %s %s: %d/%d\n", strtoupper($type), $thumb ? 'thumbnail' : 'main', $scores['current'], $scores['potential']);
                 $image = new Epc($type, $scores['current'], $scores['potential'], $thumb);
                 $image->write(__DIR__ . '/../images/epc');
             }

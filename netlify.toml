@@ -1,5 +1,5 @@
 [build]
-command = "jekyll build"
+command = "jekyll build && php _scripts/epc.php"
 
 [[headers]]
 for = "/*"
