@@ -1,0 +1,20 @@
+[build]
+command = "jekyll build"
+
+[[headers]]
+for = "/*"
+
+  [headers.values]
+  X-Robots-Tag = "noindex, nofollow"
+
+[[redirects]]
+from = "/homes/:home/plans.pdf"
+to = "/plans/:home.pdf"
+
+[[redirects]]
+from = "/image.php/epc/ee/:cur/:pot"
+to = "/images/epc/eer/:cur_:pot.png"
+
+[[redirects]]
+from = "/image.php/epc/ei/:cur/:pot"
+to = "/images/epc/eir/:cur_:pot.png"

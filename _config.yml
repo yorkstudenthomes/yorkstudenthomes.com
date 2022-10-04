@@ -13,9 +13,9 @@ locale: en-GB
 markdown: kramdown
 
 exclude:
-  - CNAME
   - Gemfile
   - Gemfile.lock
+  - netlify.toml
   - TODO
 
 plugins:
