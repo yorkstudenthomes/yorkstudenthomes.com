@@ -7,27 +7,12 @@ lightbox: true
     <h2>{{ page.name }}</h2>
     <h3>{{ page.tag }}</h3>
 
-  {%- if page.rented %}
-
-    <div class="info">
-        <h3>House unavailable</h3>
-        <p>This house has already been rented out for this year. Please have a look at some of our other houses!</p>
-    </div>
-  {%- endif %}
-
     <p id="desc">{{ page.description }}</p>
-
-  {%- assign bills_by_amount = page.bills | sort: 'amount' -%}
-  {%- for bill in bills_by_amount %}
-    <strong class="price">£{{ bill.amount }} per room per week (plus bills){% if bill.description %} — {{ bill.description }}{% endif %}</strong>
-  {%- endfor %}
 
   {{ content }}
 
-  {%- unless page.rented %}
-    {%- assign email = site.url | replace: 'https://','@' | prepend: page.slug %}
-    <p id="email">Email for details about this house: <a href="mailto: {{ email }}">{{ email }}</a></p>
-  {%- endunless %}
+  {%- assign email = site.url | replace: 'https://','@' | prepend: page.slug %}
+  <p id="email">Email for details about this house: <a href="mailto: {{ email }}">{{ email }}</a></p>
 
   {%- assign plans = '/plans/' | append: page.slug | append: '.pdf' -%}
   {%- assign plans_exist = site.static_files | where_exp: 'f', 'f.path == plans' | size -%}
