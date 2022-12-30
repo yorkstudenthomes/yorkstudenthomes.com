@@ -6,7 +6,7 @@ title: Contact Us
 All correspondence should be sent to the following address:
 
 <address>
-    Michael Nutton<br />
+    Bec Nutton<br />
     50 Manor Heath<br />
     Copmanthorpe<br />
     York<br />
